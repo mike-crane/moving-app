@@ -1,0 +1,14 @@
+{
+  "name": "moving-app",
+  "version": "1.0.0",
+  "description": "An app designed to help keep items orgainized during a move.",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Mike Crane",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
