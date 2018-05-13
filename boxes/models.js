@@ -1,6 +1,8 @@
+'use strict';
+
 const mongoose = require('mongoose');
 
-const boxes = mongoose.Schema({
+const BoxSchema = mongoose.Schema({
   user: { type: String, required: true },
   room: { type: String, required: true },
   description: { type: String },
@@ -9,7 +11,7 @@ const boxes = mongoose.Schema({
   unpacked: { type: Boolean, default: false }
 });
 
-boxSchema.methods.apiRepr = function () {
+BoxSchema.methods.apiRepr = function () {
   return {
     id: this._id,
     user: this.user,
@@ -21,10 +23,10 @@ boxSchema.methods.apiRepr = function () {
   };
 }
 
-const Boxes = mongoose.model('boxes', boxSchema);
+const Box = mongoose.model('Box', BoxSchema);
 
-module.exports = { Boxes };
+module.exports = { Box };
 
 // let room = "kitchen"
-// Boxes.find({room: ${room} })
-//   .then(boxes)
+// Box.find({room: ${room} })
+//   .then(BoxSchema)

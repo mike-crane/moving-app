@@ -50,7 +50,6 @@ function displayBoxes(data) {
       <p>${data.boxes[index].description}</p>
       <p>${data.boxes[index].contents}</p>
       <hr>`
-      // '<p>' + data.boxes[index].text + '</p>'
     );
   }
 }
