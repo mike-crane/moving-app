@@ -58,15 +58,12 @@ function getBoxes(callbackFn) {
 
 function displayBoxes(data) {
   for (index in data.boxes) {
-    if (data.boxes[index].unpacked) {
-      $('.unpacked-list').append(
-        `<li class="unpacked-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><label for="checkBox">Unpacked:</label><input id="checkBox" type="checkbox"></div><ul><li class="box-contents">${data.boxes[index].contents}</li></ul></li>`
-      );
-    } else {
-      $('.packed-list').append(
-        `<li class="packed-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><a href="#">edit / delete</a></div><ul><li class="box-contents">${data.boxes[index].contents}</li></ul></li>`
-      );
-    }
+    $('.unpacked-list').append(
+      `<li class="unpacked-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><label for="checkBox">Unpacked:</label><input id="checkBox" type="checkbox"></div><ul><li class="box-contents">${data.boxes[index].contents}</li></ul></li>`
+    );
+    $('.packed-list').append(
+      `<li class="packed-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><a href="#">edit / delete</a></div><ul><li class="box-contents">${data.boxes[index].contents}</li></ul></li>`
+    );
   }
 }
 
