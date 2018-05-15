@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+}
+
+section {
+  margin: 100px auto;
+}
+
+h1, .landing > h2 {
+  text-align: center;
+}
+
+.packing, .unpacking {
+  max-width: 800px;
+}
+
+.packing > h2, .unpacking > h2 {
+  padding-left: 40px;
+}
+
+.packing > button, .unpacking > button {
+  width: 150px;
+  margin-right: 40px;
+  float: right;
+}
+
+.login-page {
+  width: 360px;
+  margin: auto;
+}
+
+.form {
+  position: relative;
+  background: #FFFFFF;
+  max-width: 360px;
+  padding: 0 25px;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+button {
+  background: rgb(76, 107, 175);
+  width: 100%;
+  padding: 10px;
+  color: #FFF;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.message {
+  margin: 10px 0 0;
+  font-size: 12px;
+}
+
+.register-form {
+  display: none;
+}
+
+.packed-list, .unpacked-list {
+    padding-right: 40px;
+}
+
+.box-contents {
+  font-style: italic;
+}
+
+.packed-item > a, .box-status {
+  float: right;
+}
+
+.packed-item, .unpacked-item {
+  border: 1px solid #000;
+  margin-bottom: 10px;
+  padding: 5px;
+  list-style: none;
+}
+
+#checkBox {
+  width: 20px;
+}
+
+.box-status {
+  display: inline-block;
+}
