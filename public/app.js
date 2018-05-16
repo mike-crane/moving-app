@@ -4,7 +4,7 @@ const MOCK_BOXES = {
       "id": "1111111", 
       "user": "Jeff", 
       "room": "Living Room", 
-      "description": "Stuff from bookshelf", 
+      "description": "Bookshelf items", 
       "contents": "books, picture frames", 
       "packed": 1470016976609, 
       "unpacked": false 
@@ -87,7 +87,7 @@ function displayBoxes(data) {
       `<li class="unpacked-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
     );
     $('.packed-list').append(
-      `<li class="packed-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><a href="#">edit / delete</a></div></li>`
+      `<li class="packed-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><a href="#" class="box-edit">edit</a></div></li>`
     );
   }
 }

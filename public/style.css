@@ -144,7 +144,7 @@ h1 {
 
 mark {
   background: #ff0;
-  color: #000;
+  color: #194769;
 }
 
 /**
@@ -431,8 +431,11 @@ body, html {
   height: 100%;
 }
 
+body {
+  background: #F6F6E9;
+}
+
 main {
-  /* width: 80vw; */
   margin: 0 auto;
 }
 
@@ -448,11 +451,47 @@ section {
   display: none;
 }
 
-h1, h2 {
+h2 {
   text-align: center;
   margin-bottom: 40px;
 }
 
+h1 {
+  margin: 0;
+}
+
+h2 {
+  color: #194769;
+}
+
+#header {
+  background: #2980B9;
+  padding: 10px 35px;
+  height: 70px;
+  margin: auto;
+}
+
+.menu ul {
+  padding-left: 10px;
+}
+
+.menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.logo,
+.menu {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.menu ul li {
+  display: inline-block;
+  vertical-align: top;
+}
 /* Form Elements
    ========================================================================== */
 .login-page {
@@ -462,7 +501,7 @@ h1, h2 {
 
 .form {
   position: relative;
-  background: #FFFFFF;
+  background: #F6F6E9;
   max-width: 360px;
   padding: 0 25px;
   text-align: center;
@@ -470,7 +509,7 @@ h1, h2 {
 
 .new-box-form {
   position: relative;
-  background: #FFFFFF;
+  background: #F6F6E9;
   max-width: 500px;
   padding: 0 25px;
   text-align: center;
@@ -488,7 +527,9 @@ input {
 }
 
 button {
-  background: #446abb;
+  background: #EA5455;
+  border: none;
+  border-radius: 4px;
   width: 100%;
   padding: 10px;
   color: #FFF;
@@ -496,8 +537,13 @@ button {
   cursor: pointer;
 }
 
+#add-box-btn {
+  background: #EA5455;
+}
+
 #choose-pack, #choose-unpack {
-  background: #446abb;
+  background: #EA5455;
+  border-radius: 4px;
   width: 125px;
   padding: 10px;
   color: #fff;
@@ -507,6 +553,7 @@ button {
 .message {
   margin: 10px 0 0;
   font-size: 12px;
+  color: #194769;
 }
 
 #register-form {
@@ -514,13 +561,17 @@ button {
 }
 
 #search-form > input {
-    width: 400px;
-    padding: 10px;
-    font-size: 14px;
+  width: 400px;
+  padding: 10px;
+  font-size: 14px;
+  background: transparent;
+  border: 2px solid #194769;
+  border-radius: 4px;
 }
 
 #search-form > button {
-  background: #446abb;
+  background: #EA5455;
+  border: 2px solid #EA5455;
   width: 150px;
   padding: 10px;
   color: #FFF;
@@ -553,7 +604,7 @@ button {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #446abb;
+  border-bottom: 1px solid #194769;
 }
 
 .textbox input:focus {
@@ -573,16 +624,16 @@ button {
 .textbox input:valid ~ label {
   top: -20px;
   font-size: 14px;
-  color: #446abb;
+  color: #194769;
 }
 
 .textbox label {
-  color: #000;
+  color: #194769;
   font-size: 18px;
   font-weight: normal;
   position: absolute;
   pointer-events: none;
-  left: 5px;
+  left: 0;
   top: 10px;
   transition: all 0.2s ease;
 }
@@ -599,7 +650,7 @@ button {
   width: 0;
   bottom: 1px;
   position: absolute;
-  background: #446abb;
+  background: #194769;
   transition: ease all 0.2s;
 }
 
@@ -621,39 +672,9 @@ button {
   opacity: 0.5;
 }
 
-@-moz-keyframes inputHighlight {
-  from {
-    background: #446abb;
-  }
-  to {
-    background: transparent;
-    width: 0;
-  }
-}
-
-@-webkit-keyframes inputHighlight {
-  from {
-    background: #446abb;
-  }
-  to {
-    background: transparent;
-    width: 0;
-  }
-}
-
-@-o-keyframes inputHighlight {
-  from {
-    background: #446abb;
-  }
-  to {
-    background: transparent;
-    width: 0;
-  }
-}
-
 @keyframes inputHighlight {
   from {
-    background: #446abb;
+    background: #194769;
   }
   to {
     background: transparent;
@@ -685,13 +706,14 @@ button {
 
 .packed-item, .unpacked-item {
   position: relative;
-  border: 1px solid #000;
-  margin-bottom: 10px;
-  padding: 5px;
+  background: #705e40;
+  border-radius: 3px;
+  color: #fff;
+  padding: 15px;
   list-style: none;
   display: inline-block;
-  width: 150px;
-  height: 150px;
+  width: 132px;
+  height: 132px;
   vertical-align: top;
   margin: 9px;
 }
@@ -701,7 +723,7 @@ button {
 }
 
 .packed-item > a, .box-status {
-  float: right;
+  /* float: right; */
 }
 
 .packing > button, .unpacking > button {
@@ -720,10 +742,19 @@ button {
 
 .box-status {
   position: absolute;
+  width: 81%;
   bottom: 10px;
-  left: 40px;
 }
 
+.box-edit {
+  display: block;
+  background: #D7EEF2;
+  color: #194769;
+  text-decoration: none;
+  text-align: center;
+  padding: 3px 5px;
+  border-radius: 4px;
+}
 
 
 
