@@ -48,9 +48,34 @@ const MOCK_BOXES = {
   ]
 };
 
-$('.message').on('click', 'a', function () {
-  $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
-})
+function handleSubmitButtons() {
+  $('.message').on('click', 'a', function () {
+    $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+  });
+
+  $('#login-form').submit(function (e) {
+    e.preventDefault();
+    $('.pack-or-unpack').animate({ height: "toggle", opacity: "toggle" }, "fast");
+    $('.landing').css('display', 'none');
+  });
+
+  $('#add-box-btn').on('click', function () {
+    $('.new-box').animate({ height: "toggle", opacity: "toggle" }, "fast");
+    $('.packing').css('display', 'none');
+  });
+
+  $('#choose-pack').on('click', function () {
+    $('.packing').animate({ height: "toggle", opacity: "toggle" }, "fast");
+    $('.unpacking').css('display', 'none');
+    $('.pack-or-unpack').css('display', 'none');
+  });
+
+  $('#choose-unpack').on('click', function () {
+    $('.unpacking').animate({ height: "toggle", opacity: "toggle" }, "fast");
+    $('.packing').css('display', 'none');
+    $('.pack-or-unpack').css('display', 'none');
+  });
+}
 
 function getBoxes(callbackFn) {
   setTimeout(function() { callbackFn(MOCK_BOXES)}, 100);
@@ -59,16 +84,17 @@ function getBoxes(callbackFn) {
 function displayBoxes(data) {
   for (index in data.boxes) {
     $('.unpacked-list').append(
-      `<li class="unpacked-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><label for="checkBox">Unpacked:</label><input id="checkBox" type="checkbox"></div><ul><li class="box-contents">${data.boxes[index].contents}</li></ul></li>`
+      `<li class="unpacked-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
     );
     $('.packed-list').append(
-      `<li class="packed-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><a href="#">edit / delete</a></div><ul><li class="box-contents">${data.boxes[index].contents}</li></ul></li>`
+      `<li class="packed-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><a href="#">edit / delete</a></div></li>`
     );
   }
 }
 
 function getAndDisplayBoxes() {
   getBoxes(displayBoxes);
+  $(handleSubmitButtons);
 }
 
 $(getAndDisplayBoxes);

@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<title></title>
-		<link rel="stylesheet" href="style.css">
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="An app designed to keep you organized during a move">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Moving App</title>
+		<link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 	</head>
 	<body>
 		<header role="banner">
@@ -16,36 +20,118 @@
 				<h2>Login / Landing</h2>
 				<div class="login-page">
 					<div class="form">
-						<form class="register-form">
-							<input type="text" placeholder="first name" />
-							<input type="text" placeholder="last name" />
-							<input type="text" placeholder="username" />
-							<input type="password" placeholder="password" />
-							<button>Create</button>
+						<form id="register-form">
+
+							<div class="textbox">
+								<input id="firstName" type="text" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="firstName">first name</label>
+							</div>
+
+							<div class="textbox">
+								<input id="lastName" type="text" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="lastName">last name</label>
+							</div>
+
+							<div class="textbox">
+								<input id="userName" type="text" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="userName">username</label>
+							</div>
+							
+							<div class="textbox">
+								<input id="passWord" type="password" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="passWord">password</label>
+							</div>
+
+							<button type="submit">Submit</button>
 							<p class="message">Already registered? <a href="#">Sign In</a></p>
 						</form>
-						<form class="login-form">
-							<input type="text" placeholder="username" />
-							<input type="password" placeholder="password" />
-							<button>Login</button>
+						<form id="login-form">
+
+							<div class="textbox">
+								<input id="login-username" type="text" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="login-username">username</label>
+							</div>
+							
+							<div class="textbox">
+								<input id="login-password" type="password" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="login-password">password</label>
+							</div>
+
+							<button type="submit">Login</button>
 							<p class="message">Not registered? <a href="#">Create an account</a></p>
 						</form>
 					</div>
 				</div>
 			</section>
 
+			<section class="pack-or-unpack" role="region">
+				<a href="#" id="choose-pack">PACK</a><span> or </span><a href="#" id="choose-unpack">UNPACK</a>
+			</section>
+
 			<!-- PACKING SCREEN -->
 			<section class="packing" role="region">
 				<h2>Packing</h2>
+				<button id="add-box-btn" type="button">Add Box</button>
 				<ul class="packed-list"></ul>
-				<button>Add Box</button>
 			</section>
 
 			<!-- UNPACKING SCREEN -->
 			<section class="unpacking" role="region">
 				<h2>Unpacking</h2>
+				<!-- <button type="button">Find Item</button> -->
+				<div class="search-container">
+					<form id="search-form">
+						<input type="text" placeholder="Search.." name="search">
+						<button type="submit">Find Item</button>
+					</form>
+				</div>
 				<ul class="unpacked-list"></ul>
-				<button>Find Item</button>
+			</section>
+
+			<!-- ADD NEW BOX SCREEN -->
+			<section class="new-box" role="region">
+				<h2>Add New Box</h2>
+				<div class="new-box-page">
+					<div class="new-box-form">
+						<form id="new-box-form">
+			
+							<div class="box-textbox textbox">
+								<input id="room" type="text" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="room">room</label>
+							</div>
+			
+							<div class="box-textbox textbox">
+								<input id="description" type="text" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="description">description</label>
+							</div>
+			
+							<div class="box-textbox textbox">
+								<input id="contents" type="text" required />
+								<span class="highlight"></span>
+								<span class="bar"></span>
+								<label for="contents">contents</label>
+							</div>
+			
+							<button type="submit">Submit</button>
+						</form>
+					</div>
+				</div>
 			</section>
 		</main>
 
