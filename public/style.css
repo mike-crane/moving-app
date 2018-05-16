@@ -451,24 +451,31 @@ section {
   display: none;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
 h1 {
   margin: 0;
 }
 
 h2 {
+  font-family: 'Skranji', cursive;
   color: #194769;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+span h2 {
+  display: inline-block;
 }
 
 #header {
+  font-family: 'Skranji', cursive;
   background: #2980B9;
-  padding: 10px 35px;
+  padding: 0 35px 10px;
   height: 70px;
   margin: auto;
+}
+
+.container {
+  text-align: center;
 }
 
 .menu ul {
@@ -478,8 +485,7 @@ h2 {
 .menu a {
   color: #fff;
   text-decoration: none;
-  font-size: 2em;
-  font-weight: bold;
+  font-size: 1.25em;
 }
 
 .logo,
@@ -490,7 +496,6 @@ h2 {
 
 .menu ul li {
   display: inline-block;
-  vertical-align: top;
 }
 /* Form Elements
    ========================================================================== */
@@ -533,7 +538,7 @@ button {
   width: 100%;
   padding: 10px;
   color: #FFF;
-  font-size: 14px;
+  font-size: 18px;
   cursor: pointer;
 }
 
@@ -563,7 +568,7 @@ button {
 #search-form > input {
   width: 400px;
   padding: 10px;
-  font-size: 14px;
+  font-size: 18px;
   background: transparent;
   border: 2px solid #194769;
   border-radius: 4px;
@@ -575,7 +580,7 @@ button {
   width: 150px;
   padding: 10px;
   color: #FFF;
-  font-size: 14px;
+  font-size: 18px;
   cursor: pointer;
 }
 

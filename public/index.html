@@ -6,19 +6,24 @@
 		<meta name="description" content="An app designed to keep you organized during a move">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Moving App</title>
+		<link href="https://fonts.googleapis.com/css?family=Skranji" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 	</head>
 	<body>
 
 		<header id="header">
-			<div class="logo"><img src="logo.png"></div>
-			<nav class="menu">
-				<ul>
-					<li>
-						<a href="#">Moving App</a>
-					</li>
-				</ul>
-			</nav>
+			<div class="container">
+				<div class="logo">
+					<img src="logo.png">
+				</div>
+				<nav class="menu">
+					<ul>
+						<li>
+							<a href="#"><h1>Moving App</h1></a>
+						</li>
+					</ul>
+				</nav>
+			</div>
 		</header>
 
 		<main role="main">
@@ -85,19 +90,20 @@
 			</section>
 
 			<section class="pack-or-unpack" role="region">
-				<a href="#" id="choose-pack">PACK</a><span> or </span><a href="#" id="choose-unpack">UNPACK</a>
+				<h2>Would you like to</h2>
+				<a href="#" id="choose-pack">Pack</a><span> <h2>or</h2> </span><a href="#" id="choose-unpack">Unpack</a>
 			</section>
 
 			<!-- PACKING SCREEN -->
 			<section class="packing" role="region">
-				<h2>Packing</h2>
+				<h2>Pack a Box</h2>
 				<button id="add-box-btn" type="button">Add Box</button>
 				<ul class="packed-list"></ul>
 			</section>
 
 			<!-- UNPACKING SCREEN -->
 			<section class="unpacking" role="region">
-				<h2>Unpacking</h2>
+				<h2>Unpack a Box</h2>
 				<!-- <button type="button">Find Item</button> -->
 				<div class="search-container">
 					<form id="search-form">
