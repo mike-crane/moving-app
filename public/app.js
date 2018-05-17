@@ -48,6 +48,27 @@ const MOCK_BOXES = {
   ]
 };
 
+function registerNewUser () {
+
+  // Set up an event listener for the contact form.
+  $('#register-form').submit(function () {
+
+    // Store the user info 
+    let firstname = $('firstName').val();
+    let lastname = $('lastName').val();
+    let username = $('userName').val();
+    let password = $('passWord').val();
+
+    // Submit the form using AJAX.
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:8080/api/users',
+      data: firstname, lastname, username, password
+    });
+  });
+}
+
+
 function handleSubmitButtons() {
   $('.message').on('click', 'a', function () {
     $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
@@ -95,6 +116,7 @@ function displayBoxes(data) {
 function getAndDisplayBoxes() {
   getBoxes(displayBoxes);
   $(handleSubmitButtons);
+  $(registerNewUser);
 }
 
 $(getAndDisplayBoxes);
