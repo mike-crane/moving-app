@@ -44,14 +44,18 @@ const MOCK_BOXES = {
       "contents": "computer, monitor, files, stapler, paper, pens",
       "packed": 1470013976609,
       "unpacked": true
-    }
+    },
   ]
 };
 
+/**
+ * ============================================================================
+ *            SIGNUP FUNCTION
+ * ============================================================================
+ */
 function registerNewUser() {
-
   // Set up an event listener for the registration form.
-  $('#register-form').submit(function (e) {
+  $('#register-form').submit(function(e) {
 
     // Store the user info 
     let firstName = $('#firstName').val();
@@ -67,24 +71,21 @@ function registerNewUser() {
     };
 
     // Submit the form using AJAX.
-    $.ajax({
-      headers: {
-        'Content-Type': 'application/json' 
-      },
-      type: 'POST',
-      url: 'http://localhost:8080/api/users',
-      data: JSON.stringify(user)
-    });
+    registration(user);
 
-    e.preventDefault(); // avoid to execute the actual submit of the form.
+    e.preventDefault();
   });
 }
 
+/**
+ * ============================================================================
+ *            LOGIN FUNCTION
+ * ============================================================================
+ */
 function signInUser() {
-
   // Set up an event listener for the sign in form.
   $('#login-form').submit(function (e) {
-    e.preventDefault();
+
     // Store the user info 
     let username = $('#login-username').val();
     let password = $('#login-password').val();
@@ -95,41 +96,20 @@ function signInUser() {
     };
 
     // Submit the form using AJAX.
-    $.ajax({
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      type: 'POST',
-      url: 'http://localhost:8080/api/auth/login',
-      data: JSON.stringify(user)
-    })
-    .done(token => localStorage.setItem("authToken", token.authToken));
+    authentication(user);
+
+    e.preventDefault();
   });
 }
 
-function getAllBoxes() {
-
-  let token = localStorage.getItem('authToken');
-    // Submit the form using AJAX.
-  $.ajax({
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
-    type: 'GET',
-    url: 'http://localhost:8080/api/boxes'
-  })
-  .done(function(response) {
-    console.log(response);
-  })
-  // .done(boxes => displayBoxes(boxes)); 
-}
-
+/**
+ * ============================================================================
+ *            EVENT LISTENER FUNCTIONS
+ * ============================================================================
+ */
 function addNewBox() {
-
-  // Set up an event listener for the registration form.
-  $('#new-box-form').submit(function(e) {
+  // Set up an event listener for add new box form.
+  $('#new-box-form').submit(function (e) {
 
     // Store the box info 
     let room = $('#room').val();
@@ -143,45 +123,21 @@ function addNewBox() {
     };
 
     // Submit the form using AJAX.
-    $.ajax({
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      type: 'POST',
-      url: 'http://localhost:8080/api/boxes',
-      data: JSON.stringify(box)
-    });
+    newBox(box);
 
-    $('.packing').animate({ height: "toggle", opacity: "toggle" }, "fast");
-    $('.new-box').css('display', 'none');
-
-    e.preventDefault(); // avoid to execute the actual submit of the form.
+    e.preventDefault();
   });
 }
-
 
 function handleSubmitButtons() {
   $('.message').on('click', 'a', function () {
     $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
   });
 
-  $('#login-form').submit(function (e) {
-    e.preventDefault();
-    $('.pack-or-unpack').animate({ height: "toggle", opacity: "toggle" }, "fast");
-    $('.landing').css('display', 'none');
-  });
-
   $('#add-box-btn').on('click', function () {
     $('.new-box').animate({ height: "toggle", opacity: "toggle" }, "fast");
     $('.packing').css('display', 'none');
   });
-
-  // $('#new-box-form').submit(function (e) {
-  //   // addNewBox();
-  //   $('.packing').animate({ height: "toggle", opacity: "toggle" }, "fast");
-  //   $('.new-box').css('display', 'none');
-  //   e.preventDefault();
-  // });
 
   $('#choose-pack').on('click', function () {
     $('.packing').animate({ height: "toggle", opacity: "toggle" }, "fast");
@@ -196,10 +152,11 @@ function handleSubmitButtons() {
   });
 }
 
-function getBoxes(callbackFn) {
-  setTimeout(function() { callbackFn(MOCK_BOXES)}, 100);
-}
-
+/**
+ * ============================================================================
+ *            FUNCTIONS RESPONSIBLE FOR RENDERING TO DOM
+ * ============================================================================
+ */
 function displayBoxes(data) {
   for (index in data.boxes) {
     $('.unpacked-list').append(
@@ -211,7 +168,102 @@ function displayBoxes(data) {
   }
 }
 
-function getAndDisplayBoxes() {
+function getBoxes(callbackFn) {
+  setTimeout(function () { callbackFn(MOCK_BOXES) }, 100);
+}
+
+/**
+ * ============================================================================
+ *            FUNCTIONS RESPONSIBLE FOR API CALLS
+ * ============================================================================
+ */
+
+// registration API
+function registration(user) {
+  $.ajax({
+    url: 'http://localhost:8080/api/users',
+    type: 'POST',
+    data: JSON.stringify(user),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .done(function (data) {
+      console.log(data);
+    })
+    .fail(function (err) {
+      console.log(err);
+    });
+}
+
+// login API
+function authentication(user) {
+  $.ajax({
+    url: 'http://localhost:8080/api/auth/login',
+    type: 'POST',
+    data: JSON.stringify(user),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .done(token => {
+      localStorage.setItem("authToken", token.authToken);
+      $('.pack-or-unpack').animate({ height: "toggle", opacity: "toggle" }, "fast");
+      $('.landing').css('display', 'none');
+    })
+    .fail(function (err) {
+      console.log(err);
+    });
+}
+
+// new box API
+function newBox(box) {
+  $.ajax({
+    url: 'http://localhost:8080/api/boxes',
+    type: 'POST',
+    data: JSON.stringify(box),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    }
+  })
+    .done(token => {
+      $('.packed-list').append(
+        `<li class="packed-item">${box.description} from ${box.room} <div class="box-status"><a href="#" class="box-edit">edit</a></div></li>`
+      );
+      $('.unpacked-list').append(
+        `<li class="unpacked-item">${box.description} from ${box.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
+      );
+      $('.packing').animate({ height: "toggle", opacity: "toggle" }, "fast");
+      $('.new-box').css('display', 'none');
+    })
+    .fail(function (err) {
+      console.log(err);
+    });
+}
+
+// get all boxes API
+function getAllBoxes(callback) {
+  $.ajax({
+    url: 'http://localhost:8080/api/boxes',
+    type: 'GET',
+    headers: { "Authorization": 'Bearer ' + localStorage.getItem('authToken') },
+    dataType: 'JSON'
+  })
+    .done(function (data) {
+      callback(data);
+    })
+    .fail(function (err) {
+      console.error(err);
+    });
+}
+
+/**
+ * ============================================================================
+ *            ON READY FUNCTIONS
+ * ============================================================================
+ */
+function initiateApp() {
   getBoxes(displayBoxes);
   $(handleSubmitButtons);
   $(registerNewUser);
@@ -219,4 +271,4 @@ function getAndDisplayBoxes() {
   $(addNewBox);
 }
 
-$(getAndDisplayBoxes);
+$(initiateApp);
