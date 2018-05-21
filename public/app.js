@@ -1,5 +1,4 @@
-const MOCK_BOXES = {
-  "boxes": [
+const MOCK_BOXES = [
     {
       "id": "1111111", 
       "user": "Jeff", 
@@ -45,8 +44,7 @@ const MOCK_BOXES = {
       "packed": 1470013976609,
       "unpacked": true
     },
-  ]
-};
+  ];
 
 /**
  * ============================================================================
@@ -102,6 +100,25 @@ function signInUser() {
   });
 }
 
+// get all boxes API
+function getAllBoxes(callback) {
+  let token = localStorage.getItem('authToken');
+  $.ajax({
+    url: 'http://localhost:8080/api/boxes',
+    type: 'GET',
+    headers: { 
+      "Authorization": 'Bearer ' + token 
+    },
+    dataType: 'JSON'
+  })
+  .done(data => {
+    callback(data);
+  })
+  .fail(function (err) {
+    console.error(err);
+  });
+}
+
 /**
  * ============================================================================
  *            EVENT LISTENER FUNCTIONS
@@ -149,6 +166,7 @@ function handleSubmitButtons() {
     $('.unpacking').animate({ height: "toggle", opacity: "toggle" }, "fast");
     $('.packing').css('display', 'none');
     $('.pack-or-unpack').css('display', 'none');
+    getAllBoxes(displayBoxes);
   });
 }
 
@@ -158,12 +176,14 @@ function handleSubmitButtons() {
  * ============================================================================
  */
 function displayBoxes(data) {
-  for (index in data.boxes) {
+  $('.unpacked-list').empty();
+  $('.packed-list').empty();
+  for (let i=0; i<data.length; i++) {
     $('.unpacked-list').append(
-      `<li class="unpacked-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
+      `<li class="unpacked-item">${data[i].description} from ${data[i].room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
     );
     $('.packed-list').append(
-      `<li class="packed-item">${data.boxes[index].description} from ${data.boxes[index].room} <div class="box-status"><a href="#" class="box-edit">edit</a></div></li>`
+      `<li class="packed-item">${data[i].description} from ${data[i].room} <div class="box-status"><a href="#" class="box-edit">edit</a></div></li>`
     );
   }
 }
@@ -188,12 +208,12 @@ function registration(user) {
       'Content-Type': 'application/json'
     }
   })
-    .done(function (data) {
-      console.log(data);
-    })
-    .fail(function (err) {
-      console.log(err);
-    });
+  .done(function (data) {
+    console.log(data);
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
 }
 
 // login API
@@ -218,45 +238,31 @@ function authentication(user) {
 
 // new box API
 function newBox(box) {
+  let token = localStorage.getItem('authToken');  
   $.ajax({
     url: 'http://localhost:8080/api/boxes',
     type: 'POST',
     data: JSON.stringify(box),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+      'Authorization': 'Bearer ' + token 
     }
   })
-    .done(token => {
-      $('.packed-list').append(
-        `<li class="packed-item">${box.description} from ${box.room} <div class="box-status"><a href="#" class="box-edit">edit</a></div></li>`
-      );
-      $('.unpacked-list').append(
-        `<li class="unpacked-item">${box.description} from ${box.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
-      );
-      $('.packing').animate({ height: "toggle", opacity: "toggle" }, "fast");
-      $('.new-box').css('display', 'none');
-    })
-    .fail(function (err) {
-      console.log(err);
-    });
+  .done(data => {
+    $('.packed-list').append(
+      `<li class="packed-item">${data.description} from ${data.room} <div class="box-status"><a href="#" class="box-edit">edit</a></div></li>`
+    );
+    $('.unpacked-list').append(
+      `<li class="unpacked-item">${data.description} from ${data.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
+    );
+    $('.packing').animate({ height: "toggle", opacity: "toggle" }, "fast");
+    $('.new-box').css('display', 'none');
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
 }
 
-// get all boxes API
-function getAllBoxes(callback) {
-  $.ajax({
-    url: 'http://localhost:8080/api/boxes',
-    type: 'GET',
-    headers: { "Authorization": 'Bearer ' + localStorage.getItem('authToken') },
-    dataType: 'JSON'
-  })
-    .done(function (data) {
-      callback(data);
-    })
-    .fail(function (err) {
-      console.error(err);
-    });
-}
 
 /**
  * ============================================================================
@@ -264,7 +270,7 @@ function getAllBoxes(callback) {
  * ============================================================================
  */
 function initiateApp() {
-  getBoxes(displayBoxes);
+  // getAllBoxes(displayBoxes);
   $(handleSubmitButtons);
   $(registerNewUser);
   $(signInUser);
