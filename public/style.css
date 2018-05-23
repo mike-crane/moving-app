@@ -448,6 +448,8 @@ section {
 }
 
 .new-box {
+  position: relative;
+  width: 549px;
   display: none;
 }
 
@@ -690,6 +692,7 @@ button {
 /* Packing & Unpacking Screen Elements
    ========================================================================== */
 .packing, .unpacking {
+  position: relative;
   max-width: 800px;
 }
 
@@ -735,6 +738,29 @@ button {
   width: 150px;
   display: block;
   margin: 0 auto;
+}
+
+#pack-back, #unpack-back, #addbox-back {
+  position: absolute;
+  top: 0;
+  left: 49px;
+  width: 40px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #2980B9;
+}
+
+i {
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 4px;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 
 .box-contents {
