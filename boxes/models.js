@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 const BoxSchema = mongoose.Schema({
   // user: { type: String, required: true },
   room: { type: String, required: true },
-  description: { type: String },
+  description: { type: String, required: true },
   contents: { type: String, required: true }
   // packed: { type: Date, default: Date.now },
   // unpacked: { type: Boolean, default: false }

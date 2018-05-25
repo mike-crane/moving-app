@@ -14,7 +14,7 @@ const expect = chai.expect;
 // see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
-describe('/api/user', function () {
+describe('/api/user', () => {
   const username = 'exampleUser';
   const password = 'examplePass';
   const firstName = 'Example';
@@ -24,23 +24,23 @@ describe('/api/user', function () {
   const firstNameB = 'ExampleB';
   const lastNameB = 'UserB';
 
-  before(function () {
+  before(() => {
     return runServer(TEST_DATABASE_URL);
   });
 
-  after(function () {
+  after(() => {
     return closeServer();
   });
 
-  beforeEach(function () { });
+  beforeEach(() => { });
 
-  afterEach(function () {
+  afterEach(() => {
     return User.remove({});
   });
 
-  describe('/api/users', function () {
-    describe('POST', function () {
-      it('Should reject users with missing username', function () {
+  describe('/api/users', () => {
+    describe('POST', () => {
+      it('Should reject users with missing username', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -64,7 +64,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('username');
           });
       });
-      it('Should reject users with missing password', function () {
+      it('Should reject users with missing password', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -88,7 +88,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('password');
           });
       });
-      it('Should reject users with non-string username', function () {
+      it('Should reject users with non-string username', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -115,7 +115,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('username');
           });
       });
-      it('Should reject users with non-string password', function () {
+      it('Should reject users with non-string password', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -142,7 +142,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('password');
           });
       });
-      it('Should reject users with non-string first name', function () {
+      it('Should reject users with non-string first name', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -169,7 +169,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('firstName');
           });
       });
-      it('Should reject users with non-string last name', function () {
+      it('Should reject users with non-string last name', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -196,7 +196,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('lastName');
           });
       });
-      it('Should reject users with non-trimmed username', function () {
+      it('Should reject users with non-trimmed username', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -223,7 +223,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('username');
           });
       });
-      it('Should reject users with non-trimmed password', function () {
+      it('Should reject users with non-trimmed password', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -250,7 +250,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('password');
           });
       });
-      it('Should reject users with empty username', function () {
+      it('Should reject users with empty username', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -277,7 +277,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('username');
           });
       });
-      it('Should reject users with password less than ten characters', function () {
+      it('Should reject users with password less than ten characters', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -304,7 +304,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('password');
           });
       });
-      it('Should reject users with password greater than 72 characters', function () {
+      it('Should reject users with password greater than 72 characters', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -331,7 +331,7 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('password');
           });
       });
-      it('Should reject users with duplicate username', function () {
+      it('Should reject users with duplicate username', () => {
         // Create an initial user
         return User.create({
           username,
@@ -365,42 +365,42 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('username');
           });
       });
-      // it('Should create a new user', function () {
-      //   return chai
-      //     .request(app)
-      //     .post('/api/users')
-      //     .send({
-      //       username,
-      //       password,
-      //       firstName,
-      //       lastName
-      //     })
-      //     .then(res => {
-      //       expect(res).to.have.status(201);
-      //       expect(res.body).to.be.an('object');
-      //       expect(res.body).to.have.keys(
-      //         'username',
-      //         'firstName',
-      //         'lastName'
-      //       );
-      //       expect(res.body.username).to.equal(username);
-      //       expect(res.body.firstName).to.equal(firstName);
-      //       expect(res.body.lastName).to.equal(lastName);
-      //       return User.findOne({
-      //         username
-      //       });
-      //     })
-      //     .then(user => {
-      //       expect(user).to.not.be.null;
-      //       expect(user.firstName).to.equal(firstName);
-      //       expect(user.lastName).to.equal(lastName);
-      //       return user.validatePassword(password);
-      //     })
-      //     .then(passwordIsCorrect => {
-      //       expect(passwordIsCorrect).to.be.true;
-      //     });
-      // });
-      it('Should trim firstName and lastName', function () {
+      it('Should create a new user', () => {
+        return chai
+          .request(app)
+          .post('/api/users')
+          .send({
+            username,
+            password,
+            firstName,
+            lastName
+          })
+          .then(res => {
+            expect(res).to.have.status(201);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.keys(
+              'username',
+              'firstName',
+              'lastName'
+            );
+            expect(res.body.username).to.equal(username);
+            expect(res.body.firstName).to.equal(firstName);
+            expect(res.body.lastName).to.equal(lastName);
+            return User.findOne({
+              username
+            });
+          })
+          .then(user => {
+            expect(user).to.not.be.null;
+            expect(user.firstName).to.equal(firstName);
+            expect(user.lastName).to.equal(lastName);
+            return user.validatePassword(password);
+          })
+          .then(passwordIsCorrect => {
+            expect(passwordIsCorrect).to.be.true;
+          });
+      });
+      it('Should trim firstName and lastName', () => {
         return chai
           .request(app)
           .post('/api/users')
@@ -433,15 +433,15 @@ describe('/api/user', function () {
       });
     });
 
-    describe('GET', function () {
-      it('Should return an empty array initially', function () {
+    describe('GET', () => {
+      it('Should return an empty array initially', () => {
         return chai.request(app).get('/api/users').then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.length(0);
         });
       });
-      it('Should return an array of users', function () {
+      it('Should return an array of users', () => {
         return User.create(
           {
             username,

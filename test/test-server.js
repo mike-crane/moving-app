@@ -9,17 +9,17 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('index.html', function () {
+describe('index.html', () => {
 
-  before(function () {
+  before(() => {
     return runServer(TEST_DATABASE_URL);
   });
 
-  after(function () {
+  after(() => {
     return closeServer();
   });
 
-  it('should exist', function () {
+  it('should exist', () => {
     return chai.request(app)
       .get('/')
       .then(res => {

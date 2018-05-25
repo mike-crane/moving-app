@@ -15,21 +15,21 @@ const expect = chai.expect;
 // see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
-describe('Protected endpoint', function () {
+describe('Protected endpoint', () => {
   const username = 'exampleUser';
   const password = 'examplePass';
   const firstName = 'Example';
   const lastName = 'User';
 
-  before(function () {
+  before(() => {
     return runServer(TEST_DATABASE_URL);
   });
 
-  after(function () {
+  after(() => {
     return closeServer();
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     return User.hashPassword(password).then(password =>
       User.create({
         username,
@@ -40,12 +40,12 @@ describe('Protected endpoint', function () {
     );
   });
 
-  afterEach(function () {
+  afterEach(() => {
     return User.remove({});
   });
 
-  describe('/api/protected', function () {
-    it('Should reject requests with no credentials', function () {
+  describe('/api/protected', () => {
+    it('Should reject requests with no credentials', () => {
       return chai
         .request(app)
         .get('/api/protected')
@@ -62,7 +62,7 @@ describe('Protected endpoint', function () {
         });
     });
 
-    it('Should reject requests with an invalid token', function () {
+    it('Should reject requests with an invalid token', () => {
       const token = jwt.sign(
         {
           username,
@@ -92,7 +92,7 @@ describe('Protected endpoint', function () {
           expect(res).to.have.status(401);
         });
     });
-    it('Should reject requests with an expired token', function () {
+    it('Should reject requests with an expired token', () => {
       const token = jwt.sign(
         {
           user: {
@@ -125,7 +125,7 @@ describe('Protected endpoint', function () {
           expect(res).to.have.status(401);
         });
     });
-    it('Should send protected data', function () {
+    it('Should send protected data', () => {
       const token = jwt.sign(
         {
           user: {
