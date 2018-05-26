@@ -19,7 +19,8 @@ BoxSchema.methods.serialize = function () {
     // user: this.user,
     room: this.room,
     description: this.description,
-    contents: this.contents
+    contents: this.contents,
+    id: this._id
     // packed: this.packed,
     // unpacked: this.unpacked
   };

@@ -67,12 +67,13 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  let { room, contents, description } = req.body;
+  let { room, contents, description, id } = req.body;
 
   return Box.create({
     room,
     description,
-    contents
+    contents,
+    id
   })
     .then(box => {
       return res.status(201).json(box.serialize());
