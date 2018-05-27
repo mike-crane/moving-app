@@ -221,6 +221,7 @@ function displayBoxEdit(room, desc, cont) {
         <label>Contents</label>
         <input class="edit-field" type="text" value="${cont}" id="edit-cont" disabled>
         <button type="button" class="editButton">Edit</button>
+        <button type="button" class="deleteButton">Delete</button>
         <div class="actionButtons">
           <a href="#" class="cancelButton">Cancel</a>
           <button class="saveButton" type="submit">Save</button>
@@ -236,12 +237,10 @@ function displayEditView() {
 
   $(document).on("click", ".editButton", function () {
     let section = $(this).closest(".formSection");
-    let otherSections = $(".formSection").not(section);
     let inputs = section.find("input");
     oldValues = {};
 
     section.removeClass("readOnly");
-    otherSections.addClass("disabled").find('button').prop("disabled", true);
 
     inputs.each(function () {
       oldValues[this.id] = $(this).val();
@@ -249,12 +248,9 @@ function displayEditView() {
   }).on("click", ".cancelButton", function (e) {
 
     let section = $(this).closest(".formSection");
-    let otherSections = $(".formSection").not(section);
     let inputs = section.find("input");
 
     section.addClass("readOnly");
-
-    otherSections.removeClass("disabled");
 
     $('button').prop("disabled", false);
 

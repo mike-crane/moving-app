@@ -547,12 +547,26 @@ button {
   background: #EA5455;
 }
 
+.pack-or-unpack h2 {
+  font-size: 2em;
+  margin-bottom: 50px;
+}
+
+.packing-container p {
+  font-family: 'Skranji', cursive;
+  font-size: 2em;
+  color: #194769;
+  display: inline-block;
+  margin-right: 35px;
+  margin-left: 35px;
+  vertical-align: top;
+}
+
+.packing-container a:hover {
+  opacity: .8;
+}
+
 #choose-pack, #choose-unpack {
-  background: #EA5455;
-  border-radius: 4px;
-  width: 125px;
-  padding: 10px;
-  color: #fff;
   text-decoration: none;
 }
 
@@ -695,15 +709,9 @@ button {
   text-align: center;
 }
 
-#choose-pack, #choose-unpack {
-  display: inline-block;
-  width: 150px;
-  margin: 10px;
-}
-
 .packed-item, .unpacked-item {
   position: relative;
-  background: #705e40;
+  background: #7E6650;
   border-radius: 3px;
   color: #fff;
   padding: 15px;
@@ -713,11 +721,11 @@ button {
   height: 132px;
   vertical-align: top;
   margin: 9px;
-  cursor: pointer;
 }
 
 .packed-item:hover {
-  background: #8d7750;
+  background: #89735F;
+  cursor: pointer;
 }
 
 .packed-list, .unpacked-list {
@@ -781,8 +789,8 @@ i {
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 4px;
-  background: #ccc;
-  border: 3px solid #705e40;
+  background: #F0D7B8;
+  border: 3px solid #7E6650;
   transition: background 0.4s ease;
 }
 
@@ -796,7 +804,7 @@ i {
   border: 2px solid #000;
   border-radius: 4px;
   padding: 2px 4px;
-  margin: 5px 0 5px 0px;
+  margin: 2px 0 15px 0px;
   display: block;
 }
 
@@ -814,9 +822,9 @@ label {
   width: 15%;
   margin-right: 8px;
   color: #fff;
-  background: #000;
+  background: #4D3131;
   padding: 9px 16px 6px;
-  border: 2px solid #000;
+  border: 2px solid #4D3131;
   border-radius: 4px;
   font-weight: bold;
   text-decoration: none;
@@ -826,38 +834,52 @@ label {
   display: inline-block;
   width: 78%;
   padding: 8px 16px;
-  background: #705e40;
+  background: #7E6650;
   color: #fff;
   cursor: pointer;
   transition: background 0.4s ease;
 }
 
 .saveButton:hover {
-  background: #8d7750;
+  background: #89735F;
 }
 
 .editButton:hover {
-  background: #fff;
+  background: #F2DEC4;
 }
 
-.editButton {
-  width: 99%;
+.deleteButton:hover {
+  background: #5D4343;
+}
+
+.editButton, 
+.deleteButton {
+  width: 48%;
   display: none;
-  margin: 10px 2px;
   padding: 8px 16px;
-  background: #ccc;
-  color: #000;
   font-weight: bold;
   transition: background 0.4s ease;
 }
 
+.editButton {
+  margin: 10px 8px 10px 2px;
+  background: #F0D7B8;
+  color: #000;
+}
+
+.deleteButton {
+  margin: 10px 2px;
+  background: #4D3131;
+  color: #00000;
+}
+
 .formSection.readOnly {
-  background: #705e40;
+  background: #7E6650;
   color: #fff;
 }
 
 input[disabled] {
-  background: #705e40;
+  background: #7E6650;
   color: #fff;
   border-color: transparent;
 }
@@ -866,12 +888,8 @@ input[disabled] {
   display: none;
 }
 
-.readOnly .editButton {
-  display: block;
+.readOnly .editButton, 
+.readOnly .deleteButton  {
+  display: inline-block;
   cursor: pointer;
 }
-
-
-
-
-

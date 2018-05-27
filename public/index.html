@@ -37,21 +37,21 @@
 						<form id="register-form" hidden>
 							<h2>Sign Up</h2>
 							<div class="textbox">
-								<input id="firstName" type="text" required />
+								<input id="firstName" type="text" autocomplete="off" required />
 								<span class="highlight"></span>
 								<span class="bar"></span>
 								<label for="firstName">first name</label>
 							</div>
 
 							<div class="textbox">
-								<input id="lastName" type="text" required />
+								<input id="lastName" type="text" autocomplete="off" required />
 								<span class="highlight"></span>
 								<span class="bar"></span>
 								<label for="lastName">last name</label>
 							</div>
 
 							<div class="textbox">
-								<input id="userName" type="text" required />
+								<input id="userName" type="text" autocomplete="off" required />
 								<span class="highlight"></span>
 								<span class="bar"></span>
 								<label for="userName">username</label>
@@ -92,7 +92,15 @@
 
 			<section class="pack-or-unpack" role="region" hidden>
 				<h2>Would you like to</h2>
-				<a href="#" id="choose-pack">Pack</a><span> <h2>or</h2> </span><a href="#" id="choose-unpack">Unpack</a>
+				<div class="packing-container">
+					<a href="#" id="choose-pack">
+						<img src="images/packing.png" alt="packing a box">
+					</a>
+						<p>or</p>
+					<a href="#" id="choose-unpack">
+						<img src="images/unpacking.png" alt="unpacking a box">
+					</a>
+				</div>
 			</section>
 
 			<!-- PACKING SCREEN -->
@@ -131,21 +139,21 @@
 						<form id="new-box-form">
 			
 							<div class="box-textbox textbox">
-								<input id="room" type="text" required />
+								<input id="room" type="text" autocomplete="off" required />
 								<span class="highlight"></span>
 								<span class="bar"></span>
 								<label for="room">room</label>
 							</div>
 			
 							<div class="box-textbox textbox">
-								<input id="description" type="text" required />
+								<input id="description" type="text" autocomplete="off" required />
 								<span class="highlight"></span>
 								<span class="bar"></span>
 								<label for="description">description</label>
 							</div>
 			
 							<div class="box-textbox textbox">
-								<input id="contents" type="text" required />
+								<input id="contents" type="text" autocomplete="off" required />
 								<span class="highlight"></span>
 								<span class="bar"></span>
 								<label for="contents">contents</label>
