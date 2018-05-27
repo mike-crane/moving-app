@@ -34,7 +34,7 @@
 				<div class="login-page">
 					<div id="form-messages"></div>
 					<div class="form">
-						<form id="register-form">
+						<form id="register-form" hidden>
 							<h2>Sign Up</h2>
 							<div class="textbox">
 								<input id="firstName" type="text" required />
@@ -90,13 +90,13 @@
 				</div>
 			</section>
 
-			<section class="pack-or-unpack" role="region">
+			<section class="pack-or-unpack" role="region" hidden>
 				<h2>Would you like to</h2>
 				<a href="#" id="choose-pack">Pack</a><span> <h2>or</h2> </span><a href="#" id="choose-unpack">Unpack</a>
 			</section>
 
 			<!-- PACKING SCREEN -->
-			<section class="packing" role="region">
+			<section class="packing" role="region" hidden>
 				<h2>Pack a Box</h2>
 				<button id="pack-back" type="button">
 					<i class="left"></i>
@@ -106,7 +106,7 @@
 			</section>
 
 			<!-- UNPACKING SCREEN -->
-			<section class="unpacking" role="region">
+			<section class="unpacking" role="region" hidden>
 				<h2>Unpack a Box</h2>
 				<button id="unpack-back" type="button">
 					<i class="left"></i>
@@ -121,7 +121,7 @@
 			</section>
 
 			<!-- ADD NEW BOX SCREEN -->
-			<section class="new-box" role="region">
+			<section class="new-box" role="region" hidden>
 				<h2>Add New Box</h2>
 				<button id="addbox-back" type="button">
 					<i class="left"></i>
@@ -157,13 +157,13 @@
 				</div>
 			</section>
 
-			<!-- EDIT BOX SCREEN -->
-			<!-- <section class="edit-box" role="region">
+			<!-- EDIT PACKED BOX SCREEN -->
+			<section class="edit-packed-box" role="region" hidden>
 				<h2>Edit Box</h2>
-				<button id="addbox-back" type="button">
+				<button id="edit-packed-box-back" type="button">
 					<i class="left"></i>
 				</button>
-			</section> -->
+			</section>
 		</main>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
