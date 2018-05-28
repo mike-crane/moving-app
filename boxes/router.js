@@ -88,4 +88,13 @@ router.post('/', jsonParser, (req, res) => {
     });
 });
 
+// endpoint that allows you to delete a box with a given id
+router.delete('/:id', (req, res) => {
+
+  return Box
+    .findByIdAndRemove(req.params.id)
+    .then(() => res.status(204).end())
+    .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
+
 module.exports = { router };

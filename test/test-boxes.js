@@ -237,5 +237,25 @@ describe('/api/box', () => {
           });
       });
     });
+
+    // describe('DELETE', () => {
+    //   it('Should delete box with the supplied id', () => {
+    //     let box;
+
+    //     return Box
+    //       .findOne()
+    //       .then((_box) => {
+    //         box = _box;
+    //         return chai.request(app).delete(`/boxes/${box.id}`);
+    //       })
+    //       .then((res) => {
+    //         expect(res).to.have.status(204);
+    //         return Box.findById(box.id);
+    //       })
+    //       .then((_box) => {
+    //         expect(_box).to.be.null;
+    //       });
+    //   });
+    // });
   });
 });

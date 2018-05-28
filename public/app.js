@@ -172,7 +172,7 @@ function handleSubmitButtons() {
     let boxRoom = $(this).attr('room');
     let boxDesc = $(this).attr('desc');
     let boxCont = $(this).attr('cont');
-    displayBoxEdit(boxRoom, boxDesc, boxCont);
+    displayBoxEdit(boxId, boxRoom, boxDesc, boxCont);
     displayEditView();
     $('.edit-packed-box').animate({
       height: "toggle",
@@ -210,7 +210,8 @@ function displayBoxes(data) {
   }
 }
 
-function displayBoxEdit(room, desc, cont) {
+function displayBoxEdit(boxId, room, desc, cont) {
+  let id = boxId;
   $('.edit-packed-box').append(
     `<div class="formSection readOnly">
       <form>
@@ -229,6 +230,17 @@ function displayBoxEdit(room, desc, cont) {
       </form>
     </div>`
   );
+
+  $(document).on("click", ".deleteButton", function () {
+    console.log(boxId);
+    deleteBox(boxId);
+    $('.packing').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.edit-packed-box').css('display', 'none');
+    $('.formSection').remove();
+  });
 }
 
 // FUNCTION RESPONSIBLE FOR EDIT SCREEN
@@ -236,7 +248,7 @@ function displayEditView() {
   let oldValues = null;
 
   $(document).on("click", ".editButton", function () {
-    let section = $(this).closest(".formSection");
+    let section = $(".formSection");
     let inputs = section.find("input");
     oldValues = {};
 
@@ -247,7 +259,7 @@ function displayEditView() {
     }).prop("disabled", false);
   }).on("click", ".cancelButton", function (e) {
 
-    let section = $(this).closest(".formSection");
+    let section = $(".formSection");
     let inputs = section.find("input");
 
     section.addClass("readOnly");
@@ -324,7 +336,7 @@ function newBox(box) {
   })
     .done(data => {
       $('.packed-list').append(
-        `<li class="packed-item" id="${data.id}" room="${data.room}">${data.description} from ${data.room} <div class="box-status"><a href="#" class="box-edit">edit</a></div></li>`
+        `<li class="packed-item" id="${data.id}" room="${data.room}">${data.description} from ${data.room}</li>`
       );
       $('.unpacked-list').append(
         `<li class="unpacked-item" id="${data.id}">${data.description} from ${data.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
@@ -333,10 +345,33 @@ function newBox(box) {
         height: "toggle",
         opacity: "toggle"
       }, "fast");
+      $('.new-box').css('display', 'none');
     })
     .fail(function (err) {
       console.log(err);
     });
+}
+
+// Delete Box API
+function deleteBox(id) {
+  let token = localStorage.getItem('authToken');
+  $.ajax({
+    url: `/api/boxes/${id}`,
+    type: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    }
+  })
+    .done(function (data) {
+      // remove box from localStorage
+      localStorage.removeItem(id);
+      
+      getAllBoxes(displayBoxes);
+    })
+    .fail(function (err) {
+      console.log(err);
+    })
 }
 
 /**

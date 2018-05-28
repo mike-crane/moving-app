@@ -468,36 +468,12 @@ span h2 {
 }
 
 #header {
-  font-family: 'Skranji', cursive;
   background: #2980B9;
-  padding: 0 35px 10px;
-  height: 70px;
-  margin: auto;
-}
-
-.container {
   text-align: center;
+  padding: 10px 10px 5px;
+  height: 70px;
 }
 
-.menu ul {
-  padding-left: 10px;
-}
-
-.menu a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.25em;
-}
-
-.logo,
-.menu {
-  vertical-align: middle;
-  display: inline-block;
-}
-
-.menu ul li {
-  display: inline-block;
-}
 /* Form Elements
    ========================================================================== */
 .login-page {
