@@ -1,3 +1,5 @@
+let currentBoxId = null;
+
 /**
  * ============================================================================
  *            SIGNUP FUNCTION
@@ -93,6 +95,7 @@ function addNewBox() {
 
     // Submit the form using AJAX.
     newBox(box);
+    $('#new-box-form')[0].reset();
 
     e.preventDefault();
   });
@@ -148,6 +151,7 @@ function handleSubmitButtons() {
       opacity: "toggle"
     }, "fast");
     $('.unpacking').css('display', 'none');
+    $('#search-form')[0].reset();
   });
 
   $('#addbox-back').on('click', function () {
@@ -156,6 +160,7 @@ function handleSubmitButtons() {
       opacity: "toggle"
     }, "fast");
     $('.new-box').css('display', 'none');
+    $('#new-box-form')[0].reset();
   });
 
   $('#edit-packed-box-back').on('click', function () {
@@ -168,11 +173,11 @@ function handleSubmitButtons() {
   });
 
   $('.packed-list').on('click', '.packed-item', function () {
-    let boxId = $(this).attr('id');
+    currentBoxId = $(this).attr('id');
     let boxRoom = $(this).attr('room');
     let boxDesc = $(this).attr('desc');
     let boxCont = $(this).attr('cont');
-    displayBoxEdit(boxId, boxRoom, boxDesc, boxCont);
+    displayBoxEdit(boxRoom, boxDesc, boxCont);
     displayEditView();
     $('.edit-packed-box').animate({
       height: "toggle",
@@ -184,6 +189,17 @@ function handleSubmitButtons() {
   $('.unpacked-list').on('click', '.unpacked-item', function () {
     let selectedBoxId = $(this).attr('id');
     console.log(selectedBoxId);
+  });
+
+  $(document).on("click", ".deleteButton", function () {
+    console.log(currentBoxId);
+    deleteBox(currentBoxId);
+    $('.packing').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.edit-packed-box').css('display', 'none');
+    $('.formSection').remove();
   });
 }
 
@@ -210,8 +226,7 @@ function displayBoxes(data) {
   }
 }
 
-function displayBoxEdit(boxId, room, desc, cont) {
-  let id = boxId;
+function displayBoxEdit(room, desc, cont) {
   $('.edit-packed-box').append(
     `<div class="formSection readOnly">
       <form>
@@ -230,17 +245,6 @@ function displayBoxEdit(boxId, room, desc, cont) {
       </form>
     </div>`
   );
-
-  $(document).on("click", ".deleteButton", function () {
-    console.log(boxId);
-    deleteBox(boxId);
-    $('.packing').animate({
-      height: "toggle",
-      opacity: "toggle"
-    }, "fast");
-    $('.edit-packed-box').css('display', 'none');
-    $('.formSection').remove();
-  });
 }
 
 // FUNCTION RESPONSIBLE FOR EDIT SCREEN
@@ -283,6 +287,8 @@ function displayEditView() {
 
 // registration API
 function registration(user) {
+  let password = user.password;
+  let username = user.username;
   $.ajax({
     url: 'http://localhost:8080/api/users',
     type: 'POST',
@@ -293,14 +299,28 @@ function registration(user) {
   })
     .done(function (data) {
       console.log(data);
+      $('#login-form').animate({
+        height: "toggle",
+        opacity: "toggle"
+      }, "fast");
+      $('#register-form').css('display', 'none');
+      $('.ui-message').remove();
     })
     .fail(function (err) {
-      console.log(err);
+      console.log(err.responseJSON.message);
+      if (password.length < 10) {
+        $('.ui-message').html("Password must be at least 10 characters");
+      }
+      if (err.responseJSON.location === 'username') {
+        $('.ui-message').html(`${err.responseJSON.message}. Please choose a different username.`);
+      }
     });
 }
 
 // login API
 function authentication(user) {
+  let password = user.password;
+  let username = user.username;
   $.ajax({
     url: 'http://localhost:8080/api/auth/login',
     type: 'POST',
@@ -311,14 +331,20 @@ function authentication(user) {
   })
     .done(token => {
       localStorage.setItem("authToken", token.authToken);
+      $('.pack-or-unpack').prepend(`<h2 id="welcome-message">Welcome ${user.username}!</h2>`);
       $('.pack-or-unpack').animate({
         height: "toggle",
         opacity: "toggle"
       }, "fast");
       $('.landing').css('display', 'none');
+      $('body').removeClass('background');
+      $('.ui-message').remove();
     })
     .fail(function (err) {
       console.log(err);
+      if (err.status === 401) {
+        $('.ui-message').html('Username and/or password incorrect');
+      }
     });
 }
 
@@ -364,8 +390,6 @@ function deleteBox(id) {
     }
   })
     .done(function (data) {
-      // remove box from localStorage
-      localStorage.removeItem(id);
       
       getAllBoxes(displayBoxes);
     })

@@ -15,6 +15,28 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
   
 });
+// 'use strict';
+// const express = require('express');
+// const bodyParser = require('body-parser');
+// const passport = require('passport');
+
+// const { Box } = require('./models');
+
+// const router = express.Router();
+
+// const jsonParser = bodyParser.json();
+
+// const jwtAuth = passport.authenticate('jwt', { session: false });
+
+// // Get all boxes
+// router.get('/', jwtAuth, (req, res) => {
+//   const username = req.user;
+
+//   return Box.find({ username })
+//     .then(boxes => res.status(200).json(boxes.map(box => box.serialize())))
+//     .catch(err => res.status(500).json({ message: 'Internal server error' }));
+
+// });
 
 // Post to add new box
 router.post('/', jsonParser, (req, res) => {
@@ -95,6 +117,10 @@ router.delete('/:id', (req, res) => {
     .findByIdAndRemove(req.params.id)
     .then(() => res.status(204).end())
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
+
+router.use('*', (req, res) => {
+  res.status(404).send('URL Not Found');
 });
 
 module.exports = { router };

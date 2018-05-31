@@ -5,24 +5,23 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const BoxSchema = mongoose.Schema({
-  // user: { type: String, required: true },
+  user: { type: String },
   room: { type: String, required: true },
   description: { type: String, required: true },
-  contents: { type: String, required: true }
+  contents: { type: String, required: true },
   // packed: { type: Date, default: Date.now },
-  // unpacked: { type: Boolean, default: false }
+  unpacked: { type: Boolean, default: false }
 });
 
 BoxSchema.methods.serialize = function () {
   return {
-    // id: this._id,
-    // user: this.user,
+    user: this.user,
     room: this.room,
     description: this.description,
     contents: this.contents,
-    id: this._id
+    id: this._id,
     // packed: this.packed,
-    // unpacked: this.unpacked
+    unpacked: this.unpacked
   };
 };
 

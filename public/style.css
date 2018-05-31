@@ -443,6 +443,12 @@ section {
   margin: 50px auto 100px;
 }
 
+.background {
+  background-image: url('images/background.jpg');
+  background-size: cover;
+  background-position: 40% top;
+}
+
 .pack-or-unpack {
   margin: 50px auto;
 }
@@ -474,6 +480,18 @@ span h2 {
   height: 70px;
 }
 
+.ui-message {
+    text-align: center;
+    margin-top: 30px;
+    color: red;
+    font-weight: bold;
+}
+
+#welcome-message {
+  font-size: 2.25em;
+  margin-bottom: 0;
+}
+
 /* Form Elements
    ========================================================================== */
 .login-page {
@@ -481,9 +499,14 @@ span h2 {
   margin: auto;
 }
 
+.login-heading {
+  font-size: 2.5em;
+  color: #000;
+}
+
 .form {
   position: relative;
-  background: #F6F6E9;
+  background: transparent;
   max-width: 360px;
   padding: 0 25px;
   text-align: center;
@@ -525,7 +548,11 @@ button {
 
 .pack-or-unpack h2 {
   font-size: 2em;
-  margin-bottom: 50px;
+  margin: 0 0 75px;
+}
+
+.packing-container {
+  margin-top: 10px;
 }
 
 .packing-container p {
@@ -548,8 +575,9 @@ button {
 
 .message {
   margin: 10px 0 0;
-  font-size: 12px;
-  color: #194769;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
 }
 
 #search-form > input {
@@ -596,7 +624,7 @@ button {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #194769;
+  border-bottom: 2px solid #000;
 }
 
 .textbox input:focus {
@@ -615,14 +643,15 @@ button {
 .textbox input:focus ~ label,
 .textbox input:valid ~ label {
   top: -20px;
-  font-size: 14px;
-  color: #194769;
+  font-size: 18px;
+  color: #000;
+  font-weight: bold;
 }
 
 .textbox label {
-  color: #194769;
-  font-size: 18px;
-  font-weight: normal;
+  color: #000;
+  font-size: 20px;
+  font-weight: bold;
   position: absolute;
   pointer-events: none;
   left: 0;
@@ -638,11 +667,11 @@ button {
 .textbox .bar:before,
 .textbox .bar:after {
   content: '';
-  height: 2px;
+  height: 3px;
   width: 0;
   bottom: 1px;
   position: absolute;
-  background: #194769;
+  background: #000;
   transition: ease all 0.2s;
 }
 
@@ -868,4 +897,25 @@ input[disabled] {
 .readOnly .deleteButton  {
   display: inline-block;
   cursor: pointer;
+}
+
+/* MEDIA QUERIES */
+@media only screen and (min-width: 550px) {
+  .background {
+    background-size: cover;
+    background-position: 60% top;
+  }
+
+}
+@media only screen and (min-width: 850px) {
+  .background {
+    background-size: cover;
+    background-position: 65% top;
+  }
+}
+@media only screen and (min-width: 1350px) {
+  .background {
+    background-size: cover;
+    background-position: left top;
+  }
 }
