@@ -1,16 +1,20 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const { Box } = require('./models');
 
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+router.use(jsonParser)
 
 // Get all boxes
-router.get('/', (req, res) => {
-  return Box.find()
+router.get('/:user', jwtAuth, (req, res) => {
+  return Box.find({user: req.params.user})
     .then(boxes => res.status(200).json(boxes.map(box => box.serialize())))
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
   
@@ -39,7 +43,7 @@ router.get('/', (req, res) => {
 // });
 
 // Post to add new box
-router.post('/', jsonParser, (req, res) => {
+router.post('/', jwtAuth, (req, res) => {
 
   const requiredFields = ['room', 'description', 'contents'];
   const missingField = requiredFields.find(field => !(field in req.body));
@@ -111,7 +115,7 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 // endpoint that allows you to delete a box with a given id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', jwtAuth, (req, res) => {
 
   return Box
     .findByIdAndRemove(req.params.id)

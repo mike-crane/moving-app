@@ -57,20 +57,21 @@ function signInUser() {
 // get all boxes API
 function getAllBoxes(callback) {
   let token = localStorage.getItem('authToken');
+  let user = localStorage.getItem('currentUser');  
   $.ajax({
-    url: 'http://localhost:8080/api/boxes',
+    url: `http://localhost:8080/api/boxes/${user}`,
     type: 'GET',
     headers: {
       "Authorization": 'Bearer ' + token
     },
     dataType: 'JSON'
   })
-    .done(data => {
-      callback(data);
-    })
-    .fail(function (err) {
-      console.error(err);
-    });
+  .done(data => {
+    callback(data);
+  })
+  .fail(function (err) {
+    console.error(err);
+  });
 }
 
 /**
@@ -86,8 +87,10 @@ function addNewBox() {
     let room = $('#room').val();
     let description = $('#description').val();
     let contents = $('#contents').val();
+    let user = localStorage.getItem('currentUser');
 
     const box = {
+      user,
       room,
       description,
       contents
@@ -297,24 +300,24 @@ function registration(user) {
       'Content-Type': 'application/json'
     }
   })
-    .done(function (data) {
-      console.log(data);
-      $('#login-form').animate({
-        height: "toggle",
-        opacity: "toggle"
-      }, "fast");
-      $('#register-form').css('display', 'none');
-      $('.ui-message').remove();
-    })
-    .fail(function (err) {
-      console.log(err.responseJSON.message);
-      if (password.length < 10) {
-        $('.ui-message').html("Password must be at least 10 characters");
-      }
-      if (err.responseJSON.location === 'username') {
-        $('.ui-message').html(`${err.responseJSON.message}. Please choose a different username.`);
-      }
-    });
+  .done(function (data) {
+    console.log(data);
+    $('#login-form').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('#register-form').css('display', 'none');
+    $('.ui-message').remove();
+  })
+  .fail(function (err) {
+    console.log(err.responseJSON.message);
+    if (password.length < 10) {
+      $('.ui-message').html("Password must be at least 10 characters");
+    }
+    if (err.responseJSON.location === 'username') {
+      $('.ui-message').html(`${err.responseJSON.message}. Please choose a different username.`);
+    }
+  });
 }
 
 // login API
@@ -329,23 +332,24 @@ function authentication(user) {
       'Content-Type': 'application/json'
     }
   })
-    .done(token => {
-      localStorage.setItem("authToken", token.authToken);
-      $('.pack-or-unpack').prepend(`<h2 id="welcome-message">Welcome ${user.username}!</h2>`);
-      $('.pack-or-unpack').animate({
-        height: "toggle",
-        opacity: "toggle"
-      }, "fast");
-      $('.landing').css('display', 'none');
-      $('body').removeClass('background');
-      $('.ui-message').remove();
-    })
-    .fail(function (err) {
-      console.log(err);
-      if (err.status === 401) {
-        $('.ui-message').html('Username and/or password incorrect');
-      }
-    });
+  .done(token => {
+    localStorage.setItem("authToken", token.authToken);
+    localStorage.setItem("currentUser", username);    
+    $('.pack-or-unpack').prepend(`<h2 id="welcome-message">Welcome ${user.username}!</h2>`);
+    $('.pack-or-unpack').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.landing').css('display', 'none');
+    $('body').removeClass('background');
+    $('.ui-message').remove();
+  })
+  .fail(function (err) {
+    console.log(err);
+    if (err.status === 401) {
+      $('.ui-message').html('Username and/or password incorrect');
+    }
+  });
 }
 
 // new box API
@@ -360,22 +364,22 @@ function newBox(box) {
       'Authorization': 'Bearer ' + token
     }
   })
-    .done(data => {
-      $('.packed-list').append(
-        `<li class="packed-item" id="${data.id}" room="${data.room}">${data.description} from ${data.room}</li>`
-      );
-      $('.unpacked-list').append(
-        `<li class="unpacked-item" id="${data.id}">${data.description} from ${data.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
-      );
-      $('.packing').animate({
-        height: "toggle",
-        opacity: "toggle"
-      }, "fast");
-      $('.new-box').css('display', 'none');
-    })
-    .fail(function (err) {
-      console.log(err);
-    });
+  .done(data => {
+    $('.packed-list').append(
+      `<li class="packed-item" id="${data.id}" room="${data.room}">${data.description} from ${data.room}</li>`
+    );
+    $('.unpacked-list').append(
+      `<li class="unpacked-item" id="${data.id}">${data.description} from ${data.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
+    );
+    $('.packing').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.new-box').css('display', 'none');
+  })
+  .fail(function (err) {
+    console.log(err);
+  });
 }
 
 // Delete Box API
@@ -389,13 +393,12 @@ function deleteBox(id) {
       'Authorization': 'Bearer ' + token
     }
   })
-    .done(function (data) {
-      
-      getAllBoxes(displayBoxes);
-    })
-    .fail(function (err) {
-      console.log(err);
-    })
+  .done(function (data) {    
+    getAllBoxes(displayBoxes);
+  })
+  .fail(function (err) {
+    console.log(err);
+  })
 }
 
 /**
