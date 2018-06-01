@@ -93,14 +93,7 @@ router.post('/', jwtAuth, (req, res) => {
     });
   }
 
-  let { room, contents, description, id } = req.body;
-
-  return Box.create({
-    room,
-    description,
-    contents,
-    id
-  })
+  return Box.create(req.body)
     .then(box => {
       return res.status(201).json(box.serialize());
     })

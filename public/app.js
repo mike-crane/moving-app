@@ -354,6 +354,7 @@ function authentication(user) {
 
 // new box API
 function newBox(box) {
+  console.log(box);
   let token = localStorage.getItem('authToken');
   $.ajax({
     url: 'http://localhost:8080/api/boxes',
