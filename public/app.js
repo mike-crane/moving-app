@@ -59,7 +59,7 @@ function getAllBoxes(callback) {
   let token = localStorage.getItem('authToken');
   let user = localStorage.getItem('currentUser');  
   $.ajax({
-    url: `http://localhost:8080/api/boxes/${user}`,
+    url: `/api/boxes/${user}`,
     type: 'GET',
     headers: {
       "Authorization": 'Bearer ' + token
@@ -293,7 +293,7 @@ function registration(user) {
   let password = user.password;
   let username = user.username;
   $.ajax({
-    url: 'http://localhost:8080/api/users',
+    url: '/api/users',
     type: 'POST',
     data: JSON.stringify(user),
     headers: {
@@ -325,7 +325,7 @@ function authentication(user) {
   let password = user.password;
   let username = user.username;
   $.ajax({
-    url: 'http://localhost:8080/api/auth/login',
+    url: '/api/auth/login',
     type: 'POST',
     data: JSON.stringify(user),
     headers: {
@@ -357,7 +357,7 @@ function newBox(box) {
   console.log(box);
   let token = localStorage.getItem('authToken');
   $.ajax({
-    url: 'http://localhost:8080/api/boxes',
+    url: '/api/boxes',
     type: 'POST',
     data: JSON.stringify(box),
     headers: {
