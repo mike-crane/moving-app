@@ -440,7 +440,7 @@ main {
 }
 
 section {
-  margin: 50px auto 100px;
+  margin: 50px auto;
 }
 
 .background {
@@ -455,7 +455,7 @@ section {
 
 .new-box {
   position: relative;
-  width: 549px;
+  width: 350px;
 }
 
 h1 {
@@ -477,25 +477,29 @@ span h2 {
   background: #2980B9;
   text-align: center;
   padding: 10px 10px 5px;
-  height: 70px;
+  height: 60px;
+}
+
+.logo {
+  width: 300px;
 }
 
 .ui-message {
-    text-align: center;
-    margin-top: 30px;
-    color: red;
-    font-weight: bold;
+  text-align: center;
+  margin-top: 30px;
+  color: red;
+  font-weight: bold;
 }
 
 #welcome-message {
-  font-size: 2.25em;
+  font-size: 1.75em;
   margin-bottom: 0;
 }
 
 /* Form Elements
    ========================================================================== */
 .login-page {
-  width: 360px;
+  width: 300px;
   margin: auto;
 }
 
@@ -507,7 +511,7 @@ span h2 {
 .form {
   position: relative;
   background: transparent;
-  max-width: 360px;
+  max-width: 300px;
   padding: 0 25px;
   text-align: center;
 }
@@ -521,7 +525,7 @@ span h2 {
 }
 
 .new-box-page {
-  width: 500px;
+  width: 350px;
   margin: auto;
 }
 
@@ -547,7 +551,7 @@ button {
 }
 
 .pack-or-unpack h2 {
-  font-size: 2em;
+  font-size: 1.25em;
   margin: 0 0 75px;
 }
 
@@ -557,11 +561,11 @@ button {
 
 .packing-container p {
   font-family: 'Skranji', cursive;
-  font-size: 2em;
+  font-size: 1.5em;
   color: #194769;
   display: inline-block;
-  margin-right: 35px;
-  margin-left: 35px;
+  margin-right: 10px;
+  margin-left: 10px;
   vertical-align: top;
 }
 
@@ -573,6 +577,10 @@ button {
   text-decoration: none;
 }
 
+.packing-images {
+  width: 125px;
+}
+
 .message {
   margin: 10px 0 0;
   font-size: 14px;
@@ -581,7 +589,7 @@ button {
 }
 
 #search-form > input {
-  width: 400px;
+  width: 250px;
   padding: 10px;
   font-size: 18px;
   background: transparent;
@@ -592,7 +600,7 @@ button {
 #search-form > button {
   background: #EA5455;
   border: 2px solid #EA5455;
-  width: 150px;
+  width: 100px;
   padding: 10px;
   color: #FFF;
   font-size: 18px;
@@ -604,7 +612,7 @@ button {
 }
 
 .textbox {
-  max-width: 360px;
+  max-width: 300px;
   margin-bottom: 40px;
   position: relative;
   width: 100%;
@@ -749,12 +757,21 @@ button {
 #edit-packed-box-back {
   position: absolute;
   top: 0;
-  left: 49px;
   width: 40px;
   display: block;
   margin: 0 auto;
   border-radius: 50%;
   background: #2980B9;
+}
+
+#pack-back, 
+#unpack-back, 
+#edit-packed-box-back {
+  left: 20px;
+}
+ 
+#addbox-back {
+  left: 0px;
 }
 
 i {
@@ -905,17 +922,62 @@ input[disabled] {
     background-size: cover;
     background-position: 60% top;
   }
-
+  .pack-or-unpack h2 {
+    font-size: 2em;
+  }
+  #welcome-message {
+    font-size: 2.25em;
+  }
+  .packing-images {
+    width: 200px;
+  }
+  .packing-container p {
+    font-size: 2em;
+    margin-right: 35px;
+    margin-left: 35px;
+  }
+  .new-box {
+    width: 549px;
+  }
+  .new-box-page {
+    width: 500px;
+  }
+  #addbox-back {
+    left: 49px;
+  }
+  #pack-back, 
+  #unpack-back, 
+  #edit-packed-box-back {
+    left: 49px;
+  }
+  #search-form > input {
+    width: 375px;
+  }
+  #search-form > button {
+    width: 125px;
+  }
 }
 @media only screen and (min-width: 850px) {
   .background {
     background-size: cover;
     background-position: 65% top;
   }
+  .packing-images {
+    width: 250px;
+  }
+  #search-form > input {
+    width: 400px;
+  }
+  #search-form > button {
+    width: 150px;
+  }
 }
 @media only screen and (min-width: 1350px) {
   .background {
     background-size: cover;
     background-position: left top;
+  }
+  .packing-images {
+    width: 275px;
   }
 }
