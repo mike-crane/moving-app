@@ -2,10 +2,12 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const jwt = require('jsonwebtoken');
 
 const { app, runServer, closeServer } = require('../server');
 const { Box } = require('../boxes');
-const { TEST_DATABASE_URL } = require('../config');
+const { User } = require('../users');
+const { JWT_SECRET, TEST_DATABASE_URL } = require('../config');
 
 const expect = chai.expect;
 
@@ -18,6 +20,10 @@ describe('/api/box', () => {
   const room = 'exampleRoom';
   const description = 'exampleDesc';
   const contents = 'exampleCont';
+  const username = 'exampleUser';
+  const password = 'examplePass';
+  const firstName = 'Example';
+  const lastName = 'User';
 
   before(() => {
     return runServer(TEST_DATABASE_URL);
@@ -27,16 +33,45 @@ describe('/api/box', () => {
     return closeServer();
   });
 
-  beforeEach(() => { });
+  beforeEach(() => {
+    return User.hashPassword(password).then(password =>
+      User.create({
+        username,
+        password,
+        firstName,
+        lastName
+      })
+    );
+  });
 
   afterEach(() => {
-    return Box.remove({});
+    return User.remove({});
+    // return Box.remove({});
   });
 
   describe('/api/boxes', () => {
+    const token = jwt.sign(
+      {
+        user: {
+          username,
+          firstName,
+          lastName
+        }
+      },
+      JWT_SECRET,
+      {
+        algorithm: 'HS256',
+        subject: username,
+        expiresIn: '7d'
+      }
+    );
     describe('GET', () => {
       it('Should return an empty array initially', () => {
-        return chai.request(app).get('/api/boxes').then(res => {
+
+        return chai.request(app)
+        .get('/api/boxes')
+        .set('authorization', `Bearer ${token}`)
+        .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.length(0);
@@ -74,6 +109,7 @@ describe('/api/box', () => {
         return chai
           .request(app)
           .post('/api/boxes')
+          .set('authorization', `Bearer ${token}`)
           .send({ room, description, contents })
           .then(res => {
             expect(res).to.have.status(201);
@@ -93,6 +129,7 @@ describe('/api/box', () => {
         return chai
           .request(app)
           .post('/api/boxes')
+          .set('authorization', `Bearer ${token}`)
           .send({
             description,
             contents
@@ -116,6 +153,7 @@ describe('/api/box', () => {
         return chai
           .request(app)
           .post('/api/boxes')
+          .set('authorization', `Bearer ${token}`)
           .send({
             room,
             contents
@@ -139,6 +177,7 @@ describe('/api/box', () => {
         return chai
           .request(app)
           .post('/api/boxes')
+          .set('authorization', `Bearer ${token}`)
           .send({
             room,
             description
@@ -162,6 +201,7 @@ describe('/api/box', () => {
         return chai
           .request(app)
           .post('/api/boxes')
+          .set('authorization', `Bearer ${token}`)
           .send({
             room: '',
             description,
@@ -188,6 +228,7 @@ describe('/api/box', () => {
         return chai
           .request(app)
           .post('/api/boxes')
+          .set('authorization', `Bearer ${token}`)
           .send({
             room,
             description: '',
@@ -214,6 +255,7 @@ describe('/api/box', () => {
         return chai
           .request(app)
           .post('/api/boxes')
+          .set('authorization', `Bearer ${token}`)
           .send({
             room,
             description,
