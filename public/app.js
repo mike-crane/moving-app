@@ -190,8 +190,11 @@ function handleSubmitButtons() {
   });
 
   $('.unpacked-list').on('click', '.unpacked-item', function () {
-    let selectedBoxId = $(this).attr('id');
-    console.log(selectedBoxId);
+    let id = $(this).attr('id');
+
+    $('.checkBox').off().change(function () {
+      deleteBox(id);
+    }); 
   });
 
   $(document).on("click", ".deleteButton", function () {
@@ -203,6 +206,27 @@ function handleSubmitButtons() {
     }, "fast");
     $('.edit-packed-box').css('display', 'none');
     $('.formSection').remove();
+  });
+
+  $(document).on('click', '.saveButton', function(e) {
+    let room = $('#edit-room').val();
+    let description = $('#edit-desc').val();
+    let contents = $('#edit-cont').val();
+    let box = {
+      id: currentBoxId,
+      room,
+      description,
+      contents
+    };
+    
+    updateBox(box);
+    $('.packing').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.edit-packed-box').css('display', 'none');
+    $('.formSection').remove();
+    e.preventDefault();
   });
 }
 
@@ -219,9 +243,10 @@ function displayBoxes(data) {
     let room = data[i].room;
     let desc = data[i].description;
     let cont = data[i].contents;
+    let unpacked = data[i].unpacked;
 
     $('.unpacked-list').append(
-      `<li class="unpacked-item" id="${id}">${desc} from ${room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
+      `<li class="unpacked-item" id="${id}" room="${room}" desc="${desc}" cont="${cont}" unpacked="${unpacked}">${desc} from ${room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
     );
     $('.packed-list').append(
       `<li class="packed-item" id="${id}" room="${room}" desc="${desc}" cont="${cont}">${desc} from ${room} </li>`
@@ -354,7 +379,6 @@ function authentication(user) {
 
 // new box API
 function newBox(box) {
-  console.log(box);
   let token = localStorage.getItem('authToken');
   $.ajax({
     url: '/api/boxes',
@@ -366,11 +390,12 @@ function newBox(box) {
     }
   })
   .done(data => {
+    console.log(data);
     $('.packed-list').append(
       `<li class="packed-item" id="${data.id}" room="${data.room}">${data.description} from ${data.room}</li>`
     );
     $('.unpacked-list').append(
-      `<li class="unpacked-item" id="${data.id}">${data.description} from ${data.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
+      `<li class="unpacked-item" id="${data.id}" room="${data.room}" desc="${data.desc}" cont="${data.cont}" unpacked="${data.unpacked}">${data.description} from ${data.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
     );
     $('.packing').animate({
       height: "toggle",
@@ -381,6 +406,27 @@ function newBox(box) {
   .fail(function (err) {
     console.log(err);
   });
+}
+
+// Update Box API
+function updateBox(box) {
+  let token = localStorage.getItem('authToken');
+
+  $.ajax({
+    url: `/api/boxes/${box.id}`,
+    type: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    }, 
+    data: JSON.stringify(box)
+  })
+  .done((data) => {
+    getAllBoxes(displayBoxes);
+  })
+  .fail(function (err) {
+    console.log(err);
+  })
 }
 
 // Delete Box API

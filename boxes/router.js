@@ -19,30 +19,16 @@ router.get('/:user', jwtAuth, (req, res) => {
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
   
 });
-// 'use strict';
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const passport = require('passport');
 
-// const { Box } = require('./models');
-
-// const router = express.Router();
-
-// const jsonParser = bodyParser.json();
-
-// const jwtAuth = passport.authenticate('jwt', { session: false });
-
-// // Get all boxes
-// router.get('/', jwtAuth, (req, res) => {
-//   const username = req.user;
-
-//   return Box.find({ username })
+// Search items in boxes
+// router.get('/search/:user/:query', jwtAuth, (req, res) => {
+//   return Box.find({ user: req.params.user, $text: {$search: req.params.query} })
 //     .then(boxes => res.status(200).json(boxes.map(box => box.serialize())))
 //     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 
 // });
 
-// Post to add new box
+// Post new box
 router.post('/', jwtAuth, (req, res) => {
 
   const requiredFields = ['room', 'description', 'contents'];
@@ -107,7 +93,30 @@ router.post('/', jwtAuth, (req, res) => {
     });
 });
 
-// endpoint that allows you to delete a box with a given id
+
+// Update box with a given id
+router.put('/:id', jwtAuth, jsonParser, (req, res) => {
+  const requiredFields = ['room', 'description', 'contents', 'id'];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+  if (req.params.id !== req.body.id) {
+    const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
+    console.error(message);
+    return res.status(400).send(message);
+  }
+  console.log(`Updating box item \`${req.params.id}\``);
+  Box.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
+    .then(box => res.status(204).json(box));
+});
+
+
+// Delete a box with a given id
 router.delete('/:id', jwtAuth, (req, res) => {
 
   return Box

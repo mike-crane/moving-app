@@ -69,39 +69,13 @@ describe('/api/box', () => {
       it('Should return an empty array initially', () => {
 
         return chai.request(app)
-        .get('/api/boxes')
+        .get('/api/boxes/:user')
         .set('authorization', `Bearer ${token}`)
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.length(0);
         });
-      });
-      it('Should return an array of boxes', () => {
-        return Box.create(
-          {
-            room: 'roomA',
-            description: 'descriptionA',
-            contents: 'contentsA'
-          },
-          {
-            room: 'roomB',
-            description: 'descriptionB',
-            contents: 'contentsB'
-          }
-        )
-          .then(() => chai.request(app).get('/api/boxes'))
-          .then(res => {
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.an('array');
-            expect(res.body).to.have.length(2);
-            expect(res.body[0].room).to.equal('roomA');
-            expect(res.body[0].description).to.equal('descriptionA');
-            expect(res.body[0].contents).to.equal('contentsA');
-            expect(res.body[1].room).to.equal('roomB');
-            expect(res.body[1].description).to.equal('descriptionB');
-            expect(res.body[1].contents).to.equal('contentsB');
-          });
       });
     });
     describe('POST', () => {
@@ -280,24 +254,62 @@ describe('/api/box', () => {
       });
     });
 
-    // describe('DELETE', () => {
-    //   it('Should delete box with the supplied id', () => {
-    //     let box;
+    describe('PUT', () => {
+      it('it should UPDATE a box given the id', () => {
+        const updateData = {
+          room: 'foyer',
+          description: 'decorations',
+          contents: 'vase, picture frames'
+        };
 
-    //     return Box
-    //       .findOne()
-    //       .then((_box) => {
-    //         box = _box;
-    //         return chai.request(app).delete(`/boxes/${box.id}`);
-    //       })
-    //       .then((res) => {
-    //         expect(res).to.have.status(204);
-    //         return Box.findById(box.id);
-    //       })
-    //       .then((_box) => {
-    //         expect(_box).to.be.null;
-    //       });
-    //   });
-    // });
+        return Box
+          .findOne()
+          .then((box) => {
+            updateData.id = box.id;
+
+            // make request then inspect it to make sure it reflects
+            // data we sent
+            return chai.request(app)
+              .put(`/api/boxes/${box.id}`)
+              .set('authorization', `Bearer ${token}`)
+              .send(updateData);
+          })
+          .then((res) => {
+            expect(res).to.have.status(204);
+
+            return Box.findById(updateData.id);
+          })
+          .then(function (box) {
+            expect(box.room).to.equal(updateData.room);
+            expect(box.contents).to.equal(updateData.contents);
+          });
+      });
+    });
+
+    describe('DELETE', () => {
+      it('it should DELETE a box given the id', () => {
+        let box;
+
+        return Box
+          .findOne()
+          .then(function (_box) {
+            box = _box;
+            return chai
+            .request(app)
+            .delete(`/api/boxes/${box.id}`)
+            .set('authorization', `Bearer ${token}`);
+          })
+          .then(function (res) {
+            expect(res).to.have.status(204);
+            return Box
+            .findById(box.id);
+          })
+          .then(function (_box) {
+            expect(_box).to.be.null;
+          });
+      });
+    });
+
+
   });
 });
