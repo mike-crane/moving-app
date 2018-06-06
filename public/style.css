@@ -440,7 +440,7 @@ main {
 }
 
 section {
-  margin: 100px auto 0;
+  margin: 100px auto 50px;
 }
 
 .background {
@@ -451,7 +451,7 @@ section {
 }
 
 .pack-or-unpack {
-  margin: 70px auto 0;
+  margin: 70px auto 50px;
 }
 
 .new-box, 
