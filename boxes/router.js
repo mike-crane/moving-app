@@ -20,14 +20,6 @@ router.get('/:user', jwtAuth, (req, res) => {
   
 });
 
-// Search items in boxes
-// router.get('/search/:user/:query', jwtAuth, (req, res) => {
-//   return Box.find({ user: req.params.user, $text: {$search: req.params.query} })
-//     .then(boxes => res.status(200).json(boxes.map(box => box.serialize())))
-//     .catch(err => res.status(500).json({ message: 'Internal server error' }));
-
-// });
-
 // Post new box
 router.post('/', jwtAuth, (req, res) => {
 

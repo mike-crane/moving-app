@@ -46,7 +46,6 @@ describe('/api/box', () => {
 
   afterEach(() => {
     return User.remove({});
-    // return Box.remove({});
   });
 
   describe('/api/boxes', () => {
@@ -309,7 +308,6 @@ describe('/api/box', () => {
           });
       });
     });
-
 
   });
 });

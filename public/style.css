@@ -440,7 +440,7 @@ main {
 }
 
 section {
-  margin: 50px auto;
+  margin: 100px auto 0;
 }
 
 .background {
@@ -451,10 +451,11 @@ section {
 }
 
 .pack-or-unpack {
-  margin: 50px auto;
+  margin: 70px auto 0;
 }
 
-.new-box {
+.new-box, 
+.box-contents {
   position: relative;
   width: 350px;
 }
@@ -464,7 +465,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Skranji', cursive;
+  font-family: 'Skranji', sans-serif;
   color: #194769;
   text-align: center;
   margin-bottom: 40px;
@@ -481,6 +482,10 @@ span h2 {
   height: 60px;
 }
 
+.landing {
+  margin: 0 auto;
+}
+
 .logo {
   width: 300px;
 }
@@ -490,6 +495,15 @@ span h2 {
   margin-top: 30px;
   color: red;
   font-weight: bold;
+}
+
+.app-intro {
+  font-family: 'Skranji', sans-serif;
+  text-align: center;
+  color: #1E5E87;
+  font-size: 25px;
+  font-style: italic;
+  margin-bottom: 100px;
 }
 
 #welcome-message {
@@ -515,6 +529,10 @@ span h2 {
   max-width: 300px;
   padding: 0 25px;
   text-align: center;
+}
+
+#new-box-form {
+  display: block;
 }
 
 .new-box-form {
@@ -561,7 +579,7 @@ button {
 }
 
 .packing-container p {
-  font-family: 'Skranji', cursive;
+  font-family: 'Skranji', sans-serif;
   font-size: 1.5em;
   color: #194769;
   display: inline-block;
@@ -587,25 +605,6 @@ button {
   font-size: 14px;
   font-weight: bold;
   color: #000;
-}
-
-#search-form > input {
-  width: 250px;
-  padding: 10px;
-  font-size: 18px;
-  background: transparent;
-  border: 2px solid #194769;
-  border-radius: 4px;
-}
-
-#search-form > button {
-  background: #EA5455;
-  border: 2px solid #EA5455;
-  width: 100px;
-  padding: 10px;
-  color: #FFF;
-  font-size: 18px;
-  cursor: pointer;
 }
 
 .search-container {
@@ -737,7 +736,27 @@ button {
   margin: 9px;
 }
 
-.packed-item:hover {
+.unpacked {
+  background: lightgray;
+  color: #000;
+  font-weight: bold;
+  position: relative;
+  border-radius: 3px;
+  padding: 15px;
+  list-style: none;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  vertical-align: top;
+  margin: 9px;
+}
+
+.unpacked span {
+  text-decoration: line-through;
+  font-weight: normal;
+}
+
+.packed-item:hover, .unpacked-item:hover {
   background: #89735F;
   cursor: pointer;
 }
@@ -746,7 +765,9 @@ button {
   padding: .7em;
 }
 
-.packing > button, .unpacking > button {
+.packing > button, 
+.unpacking > button,
+.box-status > button {
   width: 150px;
   display: block;
   margin: 0 auto;
@@ -755,7 +776,8 @@ button {
 #pack-back, 
 #unpack-back, 
 #addbox-back, 
-#edit-packed-box-back {
+#edit-packed-box-back,
+#box-contents-back {
   position: absolute;
   top: 0;
   width: 40px;
@@ -767,7 +789,8 @@ button {
 
 #pack-back, 
 #unpack-back, 
-#edit-packed-box-back {
+#edit-packed-box-back,
+#box-contents-back {
   left: 20px;
 }
  
@@ -787,23 +810,26 @@ i {
   -webkit-transform: rotate(135deg);
 }
 
-.box-contents {
-  font-style: italic;
-}
-
-.checkBox {
-  width: 20px;
-}
-
-.box-status {
-  position: absolute;
-  width: 81%;
-  bottom: 10px;
-}
-
 .edit-packed-box {
   position: relative;
   width: 300px;
+}
+
+.contents-container {
+  text-align: center;
+  background: #7E6650;
+  border-radius: 4px;
+  color: #fff;
+  padding: 15px;
+}
+
+.contents-container > h3 {
+  font-size: 1.5em;
+  margin-top: 0;
+}
+
+.contents-container > p {
+  margin-bottom: 40px;
 }
 
 /* BOX EDIT SCREEN */
@@ -832,9 +858,7 @@ i {
 }
 
 label {
-  padding-left: 2px;
   font-weight: bold;
-  font-size: 16px;
 }
 
 .actionButtons {
@@ -904,6 +928,7 @@ label {
 input[disabled] {
   background: #7E6650;
   color: #fff;
+  font-weight: bold;
   border-color: transparent;
 }
 
@@ -937,7 +962,8 @@ input[disabled] {
     margin-right: 35px;
     margin-left: 35px;
   }
-  .new-box {
+  .new-box, 
+  .box-contents {
     width: 549px;
   }
   .new-box-page {
@@ -957,7 +983,7 @@ input[disabled] {
   #search-form > button {
     width: 125px;
   }
-  .packed-item, .unpacked-item {
+  .packed-item, .unpacked-item, .unpacked {
     width: 115px;
     height: 115px;
   }
@@ -984,13 +1010,7 @@ input[disabled] {
   .packing-images {
     width: 250px;
   }
-  #search-form > input {
-    width: 400px;
-  }
-  #search-form > button {
-    width: 150px;
-  }
-  .packed-item, .unpacked-item {
+  .packed-item, .unpacked-item, .unpacked {
     width: 132px;
     height: 132px;
   }

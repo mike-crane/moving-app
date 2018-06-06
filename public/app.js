@@ -1,4 +1,5 @@
-let currentBoxId = null;
+// GLOBAL VARIABLES
+const BOX = {};
 
 /**
  * ============================================================================
@@ -24,7 +25,6 @@ function registerNewUser() {
 
     // Submit the form using AJAX.
     registration(user);
-
     e.preventDefault();
   });
 }
@@ -49,28 +49,7 @@ function signInUser() {
 
     // Submit the form using AJAX.
     authentication(user);
-
     e.preventDefault();
-  });
-}
-
-// get all boxes API
-function getAllBoxes(callback) {
-  let token = localStorage.getItem('authToken');
-  let user = localStorage.getItem('currentUser');  
-  $.ajax({
-    url: `/api/boxes/${user}`,
-    type: 'GET',
-    headers: {
-      "Authorization": 'Bearer ' + token
-    },
-    dataType: 'JSON'
-  })
-  .done(data => {
-    callback(data);
-  })
-  .fail(function (err) {
-    console.error(err);
   });
 }
 
@@ -84,27 +63,22 @@ function addNewBox() {
   $('#new-box-form').submit(function (e) {
 
     // Store the box info 
-    let room = $('#room').val();
-    let description = $('#description').val();
-    let contents = $('#contents').val();
-    let user = localStorage.getItem('currentUser');
-
-    const box = {
-      user,
-      room,
-      description,
-      contents
-    };
+    BOX.room = $('#room').val();
+    BOX.description = $('#description').val();
+    BOX.contents = $('#contents').val();
+    BOX.user = localStorage.getItem('currentUser');
 
     // Submit the form using AJAX.
-    newBox(box);
-    $('#new-box-form')[0].reset();
+    newBox(BOX);
 
+    // Clear out the form values after submission
+    $('#new-box-form')[0].reset();
     e.preventDefault();
   });
 }
 
 function handleSubmitButtons() {
+  // create account / sign in link
   $('.message').on('click', 'a', function () {
     $('form').animate({
       height: "toggle",
@@ -112,34 +86,37 @@ function handleSubmitButtons() {
     }, "slow");
   });
 
-  $('#add-box-btn').on('click', function () {
-    $('.new-box').animate({
-      height: "toggle",
-      opacity: "toggle"
-    }, "fast");
-    $('.packing').css('display', 'none');
-  });
-
+  // pack link
   $('#choose-pack').on('click', function () {
     $('.packing').animate({
       height: "toggle",
       opacity: "toggle"
     }, "fast");
-    $('.unpacking').css('display', 'none');
     $('.pack-or-unpack').css('display', 'none');
     getAllBoxes(displayBoxes);
   });
 
+  // unpack link
   $('#choose-unpack').on('click', function () {
     $('.unpacking').animate({
       height: "toggle",
       opacity: "toggle"
     }, "fast");
-    $('.packing').css('display', 'none');
     $('.pack-or-unpack').css('display', 'none');
     getAllBoxes(displayBoxes);
   });
 
+  // button to add new box on pack screen
+  $('#add-box-btn').on('click', function () {
+    $('.new-box').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('#new-box-form').css('display', 'block');
+    $('.packing').css('display', 'none');
+  });
+
+  // back button
   $('#pack-back').on('click', function () {
     $('.pack-or-unpack').animate({
       height: "toggle",
@@ -148,15 +125,16 @@ function handleSubmitButtons() {
     $('.packing').css('display', 'none');
   });
 
+  // back button
   $('#unpack-back').on('click', function () {
     $('.pack-or-unpack').animate({
       height: "toggle",
       opacity: "toggle"
     }, "fast");
     $('.unpacking').css('display', 'none');
-    $('#search-form')[0].reset();
   });
 
+  // back button
   $('#addbox-back').on('click', function () {
     $('.packing').animate({
       height: "toggle",
@@ -166,6 +144,7 @@ function handleSubmitButtons() {
     $('#new-box-form')[0].reset();
   });
 
+  // back button
   $('#edit-packed-box-back').on('click', function () {
     $('.packing').animate({
       height: "toggle",
@@ -175,13 +154,25 @@ function handleSubmitButtons() {
     $('.formSection').remove();
   });
 
+  // back button
+  $('#box-contents-back').on('click', function () {
+    $('.unpacking').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.box-contents').css('display', 'none');
+  });
+
+  // to expand edit screen for single box
   $('.packed-list').on('click', '.packed-item', function () {
-    currentBoxId = $(this).attr('id');
-    let boxRoom = $(this).attr('room');
-    let boxDesc = $(this).attr('desc');
-    let boxCont = $(this).attr('cont');
-    displayBoxEdit(boxRoom, boxDesc, boxCont);
+    BOX.id = $(this).attr('box-id');
+    BOX.room = $(this).attr('room');
+    BOX.description = $(this).attr('desc');
+    BOX.contents = $(this).attr('cont');
+
+    displayBoxEdit(BOX);
     displayEditView();
+
     $('.edit-packed-box').animate({
       height: "toggle",
       opacity: "toggle"
@@ -189,17 +180,26 @@ function handleSubmitButtons() {
     $('.packing').css('display', 'none');
   });
 
+  // to expand content screen for single box
   $('.unpacked-list').on('click', '.unpacked-item', function () {
-    let id = $(this).attr('id');
+    BOX.id = $(this).attr('box-id');
+    BOX.room = $(this).attr('room');
+    BOX.description = $(this).attr('desc');
+    BOX.contents = $(this).attr('cont');
+    BOX.unpacked = $(this).attr('unpacked');
 
-    $('.checkBox').off().change(function () {
-      deleteBox(id);
-    }); 
+    displayBoxContents(BOX);
+
+    $('.box-contents').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.unpacking').css('display', 'none');
   });
 
+  // delete button on edit screen
   $(document).on("click", ".deleteButton", function () {
-    console.log(currentBoxId);
-    deleteBox(currentBoxId);
+    deleteBox(BOX.id);
     $('.packing').animate({
       height: "toggle",
       opacity: "toggle"
@@ -208,18 +208,13 @@ function handleSubmitButtons() {
     $('.formSection').remove();
   });
 
+  // save changes button on edit screen
   $(document).on('click', '.saveButton', function(e) {
-    let room = $('#edit-room').val();
-    let description = $('#edit-desc').val();
-    let contents = $('#edit-cont').val();
-    let box = {
-      id: currentBoxId,
-      room,
-      description,
-      contents
-    };
+    BOX.room = $('#edit-room').val();
+    BOX.description = $('#edit-desc').val();
+    BOX.contents = $('#edit-cont').val();
     
-    updateBox(box);
+    updateBox(BOX);
     $('.packing').animate({
       height: "toggle",
       opacity: "toggle"
@@ -245,25 +240,31 @@ function displayBoxes(data) {
     let cont = data[i].contents;
     let unpacked = data[i].unpacked;
 
-    $('.unpacked-list').append(
-      `<li class="unpacked-item" id="${id}" room="${room}" desc="${desc}" cont="${cont}" unpacked="${unpacked}">${desc} from ${room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
-    );
-    $('.packed-list').append(
-      `<li class="packed-item" id="${id}" room="${room}" desc="${desc}" cont="${cont}">${desc} from ${room} </li>`
-    );
+    if (unpacked) {
+      $('.unpacked-list').append(
+        `<li class="unpacked" box-id="${id}" room="${room}" desc="${desc}" cont="${cont}" unpacked="${unpacked}">${room}<br><br><span>${cont}</span></li>`
+      );
+    } else {
+      $('.unpacked-list').append(
+        `<li class="unpacked-item" box-id="${id}" room="${room}" desc="${desc}" cont="${cont}" unpacked="${unpacked}">${desc} from ${room}</li>`
+      );
+      $('.packed-list').append(
+        `<li class="packed-item" box-id="${id}" room="${room}" desc="${desc}" cont="${cont}">${desc} from ${room} </li>`
+      );
+    }
   }
 }
 
-function displayBoxEdit(room, desc, cont) {
+function displayBoxEdit(box) {
   $('.edit-packed-box').append(
     `<div class="formSection readOnly">
       <form>
-        <label>Room</label>
-        <input class="edit-field" type="text" value="${room}" id="edit-room" disabled>
-        <label>Description</label>
-        <input class="edit-field" type="text" value="${desc}" id="edit-desc" disabled>
-        <label>Contents</label>
-        <input class="edit-field" type="text" value="${cont}" id="edit-cont" disabled>
+        <label for="edit-room">Room</label>
+        <input class="edit-field" type="text" value="${box.room}" id="edit-room" disabled>
+        <label for="edit-desc">Description</label>
+        <input class="edit-field" type="text" value="${box.description}" id="edit-desc" disabled>
+        <label for="edit-cont">Contents</label>
+        <input class="edit-field" type="text" value="${box.contents}" id="edit-cont" disabled>
         <button type="button" class="editButton">Edit</button>
         <button type="button" class="deleteButton">Delete</button>
         <div class="actionButtons">
@@ -273,6 +274,21 @@ function displayBoxEdit(room, desc, cont) {
       </form>
     </div>`
   );
+}
+
+function displayBoxContents(box) {
+  
+  $('.contents-container').html(`<h3>${box.room}</h3><p>${box.contents}</p><div class="box-status"><button type="button" id="unpack-btn">Mark Unpacked</button></div>`);
+
+  $('.contents-container').on('click', '#unpack-btn', function () {
+    box.unpacked = true;
+    updateBox(box);
+    $('.unpacking').animate({
+      height: "toggle",
+      opacity: "toggle"
+    }, "fast");
+    $('.box-contents').css('display', 'none');
+  });
 }
 
 // FUNCTION RESPONSIBLE FOR EDIT SCREEN
@@ -326,7 +342,6 @@ function registration(user) {
     }
   })
   .done(function (data) {
-    console.log(data);
     $('#login-form').animate({
       height: "toggle",
       opacity: "toggle"
@@ -335,7 +350,6 @@ function registration(user) {
     $('.ui-message').remove();
   })
   .fail(function (err) {
-    console.log(err.responseJSON.message);
     if (password.length < 10) {
       $('.ui-message').html("Password must be at least 10 characters");
     }
@@ -377,6 +391,26 @@ function authentication(user) {
   });
 }
 
+// get all boxes API
+function getAllBoxes(callback) {
+  let token = localStorage.getItem('authToken');
+  let user = localStorage.getItem('currentUser');
+  $.ajax({
+    url: `/api/boxes/${user}`,
+    type: 'GET',
+    headers: {
+      "Authorization": 'Bearer ' + token
+    },
+    dataType: 'JSON'
+  })
+    .done(data => {
+      callback(data);
+    })
+    .fail(function (err) {
+      console.error(err);
+    });
+}
+
 // new box API
 function newBox(box) {
   let token = localStorage.getItem('authToken');
@@ -390,13 +424,13 @@ function newBox(box) {
     }
   })
   .done(data => {
-    console.log(data);
     $('.packed-list').append(
-      `<li class="packed-item" id="${data.id}" room="${data.room}">${data.description} from ${data.room}</li>`
+      `<li class="packed-item" box-id="${data.id}" room="${data.room}">${data.description} from ${data.room}</li>`
     );
     $('.unpacked-list').append(
-      `<li class="unpacked-item" id="${data.id}" room="${data.room}" desc="${data.desc}" cont="${data.cont}" unpacked="${data.unpacked}">${data.description} from ${data.room} <div class="box-status"><label for="checkBox">Unpacked:<input class="checkBox" type="checkbox" title="checkbox"></label></div></li>`
+      `<li class="unpacked-item" box-id="${data.id}" room="${data.room}" desc="${data.description}" cont="${data.contents}" unpacked="${data.unpacked}">${data.description} from ${data.room}</li>`
     );
+    getAllBoxes(displayBoxes);
     $('.packing').animate({
       height: "toggle",
       opacity: "toggle"

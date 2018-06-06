@@ -9,7 +9,6 @@ const BoxSchema = mongoose.Schema({
   room: { type: String, required: true },
   description: { type: String, required: true },
   contents: { type: String, required: true },
-  // packed: { type: Date, default: Date.now },
   unpacked: { type: Boolean, default: false }
 });
 
@@ -20,7 +19,6 @@ BoxSchema.methods.serialize = function () {
     description: this.description,
     contents: this.contents,
     id: this._id,
-    // packed: this.packed,
     unpacked: this.unpacked
   };
 };
@@ -28,7 +26,3 @@ BoxSchema.methods.serialize = function () {
 const Box = mongoose.model('Box', BoxSchema);
 
 module.exports = { Box };
-
-// let room = "kitchen"
-// Box.find({room: ${room} })
-//   .then(BoxSchema)
