@@ -242,7 +242,7 @@ function displayBoxes(data) {
 
     if (unpacked) {
       $('.unpacked-list').append(
-        `<li class="unpacked" box-id="${id}" room="${room}" desc="${desc}" cont="${cont}" unpacked="${unpacked}">${room}<br><br><span>${cont}</span></li>`
+        `<li class="unpacked" box-id="${id}" room="${room}" desc="${desc}" cont="${cont}" unpacked="${unpacked}">${room}<br><span>${cont}</span></li>`
       );
     } else {
       $('.unpacked-list').append(

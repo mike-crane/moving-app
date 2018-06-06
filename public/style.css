@@ -440,7 +440,7 @@ main {
 }
 
 section {
-  margin: 100px auto 50px;
+  margin: 80px auto 50px;
 }
 
 .background {
@@ -492,7 +492,6 @@ span h2 {
 
 .ui-message {
   text-align: center;
-  margin-top: 30px;
   color: red;
   font-weight: bold;
 }
@@ -501,9 +500,9 @@ span h2 {
   font-family: 'Skranji', sans-serif;
   text-align: center;
   color: #1E5E87;
-  font-size: 25px;
+  font-size: 15px;
   font-style: italic;
-  margin-bottom: 100px;
+  margin: 20px 0;
 }
 
 #welcome-message {
@@ -519,8 +518,9 @@ span h2 {
 }
 
 .login-heading {
-  font-size: 2.5em;
+  font-size: 2em;
   color: #000;
+  margin: 5px 0 18px;
 }
 
 .form {
@@ -613,7 +613,7 @@ button {
 
 .textbox {
   max-width: 300px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   position: relative;
   width: 100%;
 }
@@ -626,7 +626,7 @@ button {
 }
 
 .textbox input {
-  font-size: 18px;
+  font-size: 15px;
   padding: 10px 0;
   display: block;
   width: 100%;
@@ -650,15 +650,15 @@ button {
 
 .textbox input:focus ~ label,
 .textbox input:valid ~ label {
-  top: -20px;
-  font-size: 18px;
+  top: -12px;
+  font-size: 15px;
   color: #000;
   font-weight: bold;
 }
 
 .textbox label {
   color: #000;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
   position: absolute;
   pointer-events: none;
@@ -726,6 +726,7 @@ button {
   position: relative;
   background: #7E6650;
   border-radius: 3px;
+  font-size: 14px;
   color: #fff;
   padding: 15px;
   list-style: none;
@@ -739,6 +740,7 @@ button {
 .unpacked {
   background: lightgray;
   color: #000;
+  font-size: 14px;
   font-weight: bold;
   position: relative;
   border-radius: 3px;
@@ -753,6 +755,7 @@ button {
 
 .unpacked span {
   text-decoration: line-through;
+  font-size: 14px;
   font-weight: normal;
 }
 
@@ -954,6 +957,12 @@ input[disabled] {
   #welcome-message {
     font-size: 2.25em;
   }
+  .login-heading {
+    font-size: 2.5em;
+  }
+  .app-intro {
+    font-size: 20px;
+  }
   .packing-images {
     width: 200px;
   }
@@ -961,6 +970,26 @@ input[disabled] {
     font-size: 2em;
     margin-right: 35px;
     margin-left: 35px;
+  }
+  .textbox {
+    margin-bottom: 40px;
+  }
+  .textbox input {
+    font-size: 18px;
+  }
+  .textbox input:focus ~ label,
+  .textbox input:valid ~ label {
+    top: -20px;
+    font-size: 18px;
+  }
+  .textbox label {
+    font-size: 20px;
+  }
+  .packed-item, 
+  .unpacked-item, 
+  .unpacked, 
+  .unpacked span {
+    font-size: 16px;
   }
   .new-box, 
   .box-contents {
@@ -976,12 +1005,6 @@ input[disabled] {
   #unpack-back, 
   #edit-packed-box-back {
     left: 49px;
-  }
-  #search-form > input {
-    width: 375px;
-  }
-  #search-form > button {
-    width: 125px;
   }
   .packed-item, .unpacked-item, .unpacked {
     width: 115px;
