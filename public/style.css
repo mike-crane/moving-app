@@ -640,7 +640,8 @@ button {
 }
 
 .textbox input:focus ~ .highlight {
-  animation: inputHighlight 0.3s ease;
+  -webkit-animation: inputHighlight 0.3s ease;
+          animation: inputHighlight 0.3s ease;
 }
 
 .textbox input:focus ~ .bar:before,
@@ -664,6 +665,8 @@ button {
   pointer-events: none;
   left: 0;
   top: 10px;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
 
@@ -680,6 +683,8 @@ button {
   bottom: 1px;
   position: absolute;
   background: #000;
+  -webkit-transition: ease all 0.2s;
+  -o-transition: ease all 0.2s;
   transition: ease all 0.2s;
 }
 
@@ -699,6 +704,16 @@ button {
   left: 0;
   pointer-events: none;
   opacity: 0.5;
+}
+
+@-webkit-keyframes inputHighlight {
+  from {
+    background: #194769;
+  }
+  to {
+    background: transparent;
+    width: 0;
+  }
 }
 
 @keyframes inputHighlight {
@@ -809,7 +824,8 @@ i {
 }
 
 .left {
-  transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+      transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
 
@@ -843,10 +859,14 @@ i {
   border-radius: 4px;
   background: #F0D7B8;
   border: 3px solid #7E6650;
+  -webkit-transition: background 0.4s ease;
+  -o-transition: background 0.4s ease;
   transition: background 0.4s ease;
 }
 
 .formSection * {
+  -webkit-transition: opacity 0.4s ease;
+  -o-transition: opacity 0.4s ease;
   transition: opacity 0.4s ease;
 }
 
@@ -887,6 +907,8 @@ label {
   background: #7E6650;
   color: #fff;
   cursor: pointer;
+  -webkit-transition: background 0.4s ease;
+  -o-transition: background 0.4s ease;
   transition: background 0.4s ease;
 }
 
@@ -908,6 +930,8 @@ label {
   display: none;
   padding: 8px 16px;
   font-weight: bold;
+  -webkit-transition: background 0.4s ease;
+  -o-transition: background 0.4s ease;
   transition: background 0.4s ease;
 }
 
