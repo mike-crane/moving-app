@@ -34,7 +34,7 @@ With a plan to move in the near future, I was looking for an easy way to keep a 
 * Mocha
 * Chai
 
-### Dev-Ops
+### DevOps
 * Heroku
 * TravisCI
 * mLab
