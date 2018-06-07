@@ -230,6 +230,8 @@ function handleSubmitButtons() {
  *            FUNCTIONS RESPONSIBLE FOR RENDERING TO DOM
  * ============================================================================
  */
+
+ // populates list of boxes from database
 function displayBoxes(data) {
   $('.unpacked-list').empty();
   $('.packed-list').empty();
@@ -255,6 +257,7 @@ function displayBoxes(data) {
   }
 }
 
+// displays box edit screen
 function displayBoxEdit(box) {
   $('.edit-packed-box').append(
     `<div class="formSection readOnly">
@@ -276,6 +279,7 @@ function displayBoxEdit(box) {
   );
 }
 
+// displays contents of box from unpacking screen
 function displayBoxContents(box) {
   
   $('.contents-container').html(`<h3>${box.room}</h3><p>${box.contents}</p><div class="box-status"><button type="button" id="unpack-btn">Mark Unpacked</button></div>`);
@@ -291,7 +295,7 @@ function displayBoxContents(box) {
   });
 }
 
-// FUNCTION RESPONSIBLE FOR EDIT SCREEN
+// function responsible for edit box screen
 function displayEditView() {
   let oldValues = null;
 
@@ -403,12 +407,12 @@ function getAllBoxes(callback) {
     },
     dataType: 'JSON'
   })
-    .done(data => {
-      callback(data);
-    })
-    .fail(function (err) {
-      console.error(err);
-    });
+  .done(data => {
+    callback(data);
+  })
+  .fail(function (err) {
+    console.error(err);
+  });
 }
 
 // new box API

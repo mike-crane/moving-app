@@ -102,7 +102,6 @@ router.put('/:id', jwtAuth, jsonParser, (req, res) => {
     console.error(message);
     return res.status(400).send(message);
   }
-  console.log(`Updating box item \`${req.params.id}\``);
   Box.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true})
     .then(box => res.status(204).json(box));
 });
