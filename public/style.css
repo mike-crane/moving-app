@@ -560,8 +560,9 @@ button {
   border-radius: 4px;
   width: 100%;
   padding: 10px;
-  color: #FFF;
+  color: #000;
   font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -789,6 +790,7 @@ button {
   width: 150px;
   display: block;
   margin: 0 auto;
+  padding: 10px 0;
 }
 
 #pack-back, 
@@ -905,7 +907,7 @@ label {
   width: 63%;
   padding: 8px 16px;
   background: #7E6650;
-  color: #fff;
+  color: #000;
   cursor: pointer;
   -webkit-transition: background 0.4s ease;
   -o-transition: background 0.4s ease;
@@ -944,7 +946,7 @@ label {
 .deleteButton {
   margin: 10px 2px;
   background: #4D3131;
-  color: #00000;
+  color: #fff;
 }
 
 .formSection.readOnly {
