@@ -223,6 +223,12 @@ function handleSubmitButtons() {
     $('.formSection').remove();
     e.preventDefault();
   });
+
+  $(".logout").on('click', function () {
+    localStorage.clear();
+    user = null;
+    window.location.reload(true);
+  });
 }
 
 /**
@@ -384,6 +390,7 @@ function authentication(user) {
       opacity: "toggle"
     }, "fast");
     $('.landing').css('display', 'none');
+    $('.logout').css('display', 'block');
     $('body').removeClass('background');
     $('.ui-message').remove();
   })

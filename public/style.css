@@ -476,10 +476,21 @@ span h2 {
 }
 
 #header {
+  position: relative;
   background: #2980B9;
-  text-align: center;
+  text-align: left;
   padding: 10px 10px 5px;
-  height: 60px;
+  height: 40px;
+}
+
+.logout {
+  float: right;
+  width: 68px;
+  font-size: 14px;
+  background: #fff;
+  color: #194769;
+  padding: 5px;
+  margin-top: 4px;
 }
 
 .landing {
@@ -487,7 +498,7 @@ span h2 {
 }
 
 .logo {
-  width: 300px;
+  width: 200px;
 }
 
 .ui-message {
@@ -606,6 +617,10 @@ button {
   font-size: 14px;
   font-weight: bold;
   color: #000;
+}
+
+.message a {
+  color: #2980B9;
 }
 
 .search-container {
@@ -976,6 +991,19 @@ input[disabled] {
   .background {
     background-size: cover;
     background-position: 60% top;
+  }
+  #header {
+    height: 60px;
+    text-align: center;
+  }
+  .logo {
+    width: 300px;
+  }
+  .logout {
+    padding: 10px;
+    margin-top: 5px;
+    width: 90px;
+    font-size: 17px;
   }
   .pack-or-unpack h2 {
     font-size: 2em;
